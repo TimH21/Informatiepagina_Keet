@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Centrale Meterkast - Keet Wûns</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>METERKAST <span>Instructiepagina</span></h1>
+    </header>
+
+    <div class="interface-container">
+        
+        <section class="visual-panel">
+            <div class="sticky-wrapper">
+                <h2 class="section-title">Visualisatie Meterkast</h2>
+                <div class="hotspot-container">
+                    <img src="meterkast-foto.jpg" alt="Meterkast Keet Wûns" id="meterkast-img">
+
+                    <div id="hw-groep1" class="hotspot type-group" style="top: 37%; left: 21.5%;" onclick="openModal('modal_groep1')"><span class="hotspot-label">G1</span></div>
+                    <div id="hw-groep2" class="hotspot type-group" style="top: 37%; left: 30%;" onclick="openModal('modal_groep2')"><span class="hotspot-label">G2</span></div>
+                    <div id="hw-groep3" class="hotspot type-group" style="top: 37%; left: 70%;" onclick="openModal('modal_groep3')"><span class="hotspot-label">G3</span></div>
+                    <div id="hw-groep4" class="hotspot type-group" style="top: 37%; left: 78.5%;" onclick="openModal('modal_groep4')"><span class="hotspot-label">G4</span></div>
+
+                    <div id="hw-aardlek-links" class="hotspot type-earth" style="top: 63.5%; left: 27%;" onclick="openModal('modal_aardlek_links')"><span class="hotspot-label">ALS L</span></div>
+                    <div id="hw-aardlek-rechts" class="hotspot type-earth" style="top: 63.5%; left: 73%;" onclick="openModal('modal_aardlek_rechts')"><span class="hotspot-label">ALS R</span></div>
+
+                    <div id="hw-main" class="hotspot type-main" style="top: 90%; left: 50%;" onclick="openModal('modal_main')"><span class="hotspot-label">HOOFD</span></div>
+                </div>
+                
+                <div class="visual-legend">
+                    <span class="legend-item"><span class="dot blue"></span> Groep</span>
+                    <span class="legend-item"><span class="dot red"></span> Aardlek</span>
+                    <span class="legend-item"><span class="dot green"></span> Hoofd</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="documentation-panel">
+            
+            <div class="tab-navigation">
+                <button class="tab-btn active" onclick="switchTab(event, 'tab-info')">📋 Informatie</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-nood')">🚨 Nood</button>
+                <button class="tab-btn" onclick="switchTab(event, 'tab-werk')">🔧 Reparatie</button>
+            </div>
+
+            <div id="tab-info" class="tab-content active">
+                <div class="accordion-container">
+                    
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-info">💻 Laptop Bediening</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-laptop">
+                                <div class="wizard-step active" data-highlight="">
+                                    <span class="step-badge">Stap 1 van 4</span>
+                                    <h3>Scherm activeren</h3>
+                                    <p>De laptop staat standaard op de lader. Druk op een willekeurige toets zodat het scherm aangaat.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 2 van 4</span>
+                                    <h3>Gebruik het 2e scherm (Belangrijk)</h3>
+                                    <p>Gebruik het aparte 2e scherm en niet het laptop eigen scherm omdat deze kapot is.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 3 van 4</span>
+                                    <h3>Wachtwoord invoeren</h3>
+                                    <p>Het wachtwoord van de laptop is <strong>1122</strong>.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 4 van 4</span>
+                                    <h3>Laptop reageert niet?</h3>
+                                    <p>Gaat de laptop niet aan als je op de toetsen drukt, druk dan op de aanknop aan de linkerkant van de laptop.</p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-laptop', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-laptop', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-info">🔊 Muziekboxen ('Fenton')</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-boxen">
+                                <div class="wizard-step active" data-highlight="hw-groep1">
+                                    <span class="step-badge">Stap 1 van 3</span>
+                                    <h3>Stroom &amp; Activering</h3>
+                                    <p>Stop de stekker in het stopcontact van de box bij de bar. De box maakt een muziek en een rood lampje begint snel te knipperen.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 2 van 3</span>
+                                    <h3>Verbinden via Bluetooth</h3>
+                                    <p>Je kan dan verbinden via bluetooth, de naam van de box is 'Fenton'. Als je bent verbonden hoor je opnieuw een geluidje en het rode lampje begint langzaam te knipperen.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 3 van 3</span>
+                                    <h3>Laptop Bluetooth conflict oplossen</h3>
+                                    <p>Verbind de box direct met een apparaat zonder dat jij kon verbinden, dan is de box verbonden met de laptop. Zet dan bluetooth op de laptop uit, het wachtwoord van de laptop is '1122'.</p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-boxen', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-boxen', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-info">📺 Televisie &amp; Firestick</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-tv">
+                                <div class="wizard-step active" data-highlight="hw-groep2">
+                                    <span class="step-badge">Stap 1 van 3</span>
+                                    <h3>Firestick voeden</h3>
+                                    <p>De tv moet aan door het usb kabeltje vanaf de firestick in het adapterblokje te steken die al in de stekkerdoos op de koelkast ligt.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 2 van 3</span>
+                                    <h3>TV inschakelen</h3>
+                                    <p>Kijk of de tv stroom krijgt en doe daarna de tv aandoen door rechts op het doorzichtige knopje te drukken. De afstandsbediening ligt normaliter op de koelkast.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 3 van 3</span>
+                                    <h3>Uitzetten (Uiterst Belangrijk!)</h3>
+                                    <p class="danger-box">⚠️ <strong>LET OP:</strong> Bij het uitdoen van de tv moet de volgorde omgekeerd afgelegd worden, och het is dan van uiterst belang dat het stekkertje van de usb kabel eruitgehaald wordt!</p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-tv', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-tv', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-info">💡 Hoofdverlichting &amp; LED-strips</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-licht">
+                                <div class="wizard-step active" data-highlight="hw-groep3">
+                                    <span class="step-badge">Stap 1 van 2</span>
+                                    <h3>Handmatige bediening</h3>
+                                    <p>Voor het licht plakt er een afstandsbediening links van de laptop aan de bar, hierop kan je drukken op de witte knop "ON" om hem aan te doen en de rode knop "OFF" om hem uit te doen.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 2 van 2</span>
+                                    <h3>Automatische Tijden &amp; Tim</h3>
+                                    <p>Het licht gaat vrijdags automatisch aan om 4 uur, zaterdags om 8 uur en/of als Tim in de buurt komt van de keet.</p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-licht', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-licht', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-info">🔥 Kachels / Verwarming</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-kachels">
+                                <div class="wizard-step active" data-highlight="hw-groep1,hw-groep3">
+                                    <span class="step-badge">Stap 1 van 3</span>
+                                    <h3>⚠️ Cruciale Belastingrestrictie (Pre-Check)</h3>
+                                    <p class="danger-box"><strong>STOP:</strong> Doe de kachel absoluut niet aan als de rookmachine (Groep 3) en/of frituurpan (Groep 1) momenteel aanstaat! Dit veroorzaakt direct overbelasting.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-groep4">
+                                    <span class="step-badge">Stap 2 van 3</span>
+                                    <h3>Slimme aansturing</h3>
+                                    <p>Als de pre-check veilig is: de kachels worden via LSC Smart Connect of Google Home aan en uit gezet.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-groep4">
+                                    <span class="step-badge">Stap 3 van 3</span>
+                                    <h3>Handmatige overbrugging &amp; Uitzetten</h3>
+                                    <p>Deze kunnen ook handmatig aangezet worden door op de aan en uit knop van de stekker te drukken, deze licht op wanneer de kachel aanstaan. <strong>Vergeet niet de kachel na afloop weer uit te zetten!</strong></p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-kachels', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-kachels', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-info">🪩 Discobol, Lichtbord &amp; Bel</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-party">
+                                <div class="wizard-step active" data-highlight="hw-groep3">
+                                    <span class="step-badge">Stap 1 van 3</span>
+                                    <h3>⚠️ Noodverlichting &amp; Asbak Check</h3>
+                                    <p class="danger-box"><strong>BELANGRIJK:</strong> De witte stekker onder het lichtknopje mag er absoluut NIET uitgetrokken worden, want dit is de stekker voor de noodverlichting! Over het lichtknopje zit een asbak gemonteerd tegen per ongeluk indrukken.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-groep3">
+                                    <span class="step-badge">Stap 2 van 3</span>
+                                    <h3>Inschakelen via de Deurknop</h3>
+                                    <p>Haal de asbak tijdelijk weg. De discobol, het 'Keet Wûns' lichtbord en de bel (of lichtslinger) gaan aan via het lichtknopje aan de rechterkant van de deur.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 3 van 3</span>
+                                    <h3>Asbak Terugplaatsen</h3>
+                                    <p>Plaats de asbak direct weer netjes terug over de knop zodat het lichtknopje gedurende de avond niet per ongeluk uitgedrukt wordt.</p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-party', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-party', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-info">🍟 Frituurpan (Buiten)</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-frituur">
+                                <div class="wizard-step active" data-highlight="hw-groep3,hw-groep4">
+                                    <span class="step-badge">Stap 1 van 3</span>
+                                    <h3>⚠️ Belastingwaarschuwing (Pre-Check)</h3>
+                                    <p class="danger-box"><strong>STOP:</strong> Doe de frituurpan absoluut niet aan als de rookmachine (Groep 3) en/of kachel(s) (Groep 4) momenteel aanstaat! De frituurpan trekt extreem veel vermogen.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-groep1">
+                                    <span class="step-badge">Stap 2 van 3</span>
+                                    <h3>Stroom &amp; Opwarmen</h3>
+                                    <p>Zet de pan buiten op een vlakke ondergrond. Steek de stekker in het stopcontact, er begint een rood lampje te branden. Laat de frituurpan opwarmen.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-groep1">
+                                    <span class="step-badge">Stap 3 van 3</span>
+                                    <h3>Groen lampje afwachten &amp; Uitzetten</h3>
+                                    <p>Wacht totdat het groene lampje (deze zit in de frituurpan zelf gedrukt) naast het rode lampje aanstaat. <strong>Na gebruik altijd de frituurpan direct weer uitdoen!</strong></p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-frituur', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-frituur', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-info">💨 Rookmachine</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-rook">
+                                <div class="wizard-step active" data-highlight="hw-groep1,hw-groep4">
+                                    <span class="step-badge">Stap 1 van 3</span>
+                                    <h3>⚠️ Vloeistofcheck &amp; Belastingrestrictie</h3>
+                                    <p class="danger-box"><strong>CRUCIAL:</strong> Check voor gebruik of de rookmachine gevuld is. Als deze leeg is brandt de machine zichzelf volledig op! Gebruik de rookmachine daarnaast absoluut niet als de kachel(s) (Groep 4) en/of frituurpan (Groep 1) aanstaan.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-groep3">
+                                    <span class="step-badge">Stap 2 van 3</span>
+                                    <h3>Stroom &amp; Opwarmen</h3>
+                                    <p>Stop de stekker in het stopcontact en er begint een rood lampje te branden. Wacht rustig totdat het lampje groen wordt.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-groep3">
+                                    <span class="step-badge">Stap 3 van 3</span>
+                                    <h3>Bediening via Remote &amp; Uitzetten</h3>
+                                    <p>Druk op de kleine afstandsbediening achter de bar op letter <strong>'a'</strong> om te roken. Het stopt automatisch, of druk op <strong>'b'</strong> voor handmatige stop. <em>(c en d doen niets)</em>. Voor het uitdoen trek je de stekker er direct uit.</p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-rook', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-rook', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-info">🌙 Verlichting Buiten</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-buiten">
+                                <div class="wizard-step active" data-highlight="hw-groep4">
+                                    <span class="step-badge">Stap 1 van 2</span>
+                                    <h3>Kabels identificeren</h3>
+                                    <p>Voor de verlichting buiten hangen er twee kabels bij het stopcontact: een voor de lichtslinger rondom de keet en een voor de verschijner aan de voorkant van de keet (die schijnt op de fietsen).</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 2 van 2</span>
+                                    <h3>In- en Uitschakelen</h3>
+                                    <p>Steek ze in het stopcontact om ze te activeren. <strong>Vergeet deze na afloop er absoluut niet uit te halen!</strong></p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-buiten', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-buiten', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-info">🚽 WC Voorschriften</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-wc">
+                                <div class="wizard-step active" data-highlight="">
+                                    <span class="step-badge">Stap 1 van 3</span>
+                                    <h3>⚠️ Belangrijke Gebruiksrestricties</h3>
+                                    <p class="danger-box"><strong>LET OP:</strong> Spoel onder geen beding objecten zoals (wc)papier of menstruatieproducten door de afvoer om acute verstoppingen te voorkomen!</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 2 van 3</span>
+                                    <h3>Correct doorspoelen</h3>
+                                    <p>Als het reservoir gevuld is kan je doorspoelen. Probeer bij het doorspoelen zo weinig mogelijk water te gebruiken.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 3 van 3</span>
+                                    <h3>Reservoir handmatig bijvullen</h3>
+                                    <p>Zit er geen water in het reservoir, draai dan de zwarte kraan links van het reservoir open zodat er water doorloopt. <strong>Vergeet deze kraan absoluut niet direct weer dicht te zetten!</strong></p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-wc', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-wc', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-info">🌐 Totale Stroomuitval (Netstoring Liander)</summary>
+                        <div class="accordion-content">
+                            <p>Als alle schakelaars op het terrein omhoog staan maar alles is zwart, controleer dan de straatverlichting of omliggende gebouwen.</p>
+                            <p>Meld de storing of bekijk de status via netbeheerder Liander (Nationaal Storingsnummer: <strong>0800-9009</strong>). Schakel bij langdurige uitval onze hoofdschakelaar preventief uit tegen piekbelasting bij herstel.</p>
+                        </div>
+                    </details>
+
+                </div>
+            </div>
+
+            <div id="tab-nood" class="tab-content">
+                <div class="accordion-container">
+                    
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-danger">🚨 Nood: Elektrische Schok</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-schok">
+                                <div class="wizard-step active" data-highlight="hw-main">
+                                    <span class="step-badge">Stap 1 van 4</span>
+                                    <h3>Schakel onmiddellijk de HOOFDSCHAKELAAR uit</h3>
+                                    <p>Raak het slachtoffer absoluut NIET aan voordat de gehele installatie spanningsloos is gemaakt.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 2 van 4</span>
+                                    <h3>Is de hoofdschakelaar onbereikbaar?</h3>
+                                    <p>Isoleer het slachtoffer van de stroombron met een droog, niet-geleidend voorwerp (bijv. houten bezemsteel).</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 3 van 4</span>
+                                    <h3>Alarmeer direct 112</h3>
+                                    <p>Meld een ernstig elektriciteitsongeval, geef de bewustzijnsstatus door en vermeld de locatie.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 4 van 4</span>
+                                    <h3>Verleen eerste hulp</h3>
+                                    <p>Controleer ademhaling. Start indien nodig met reanimatie.</p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-schok', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-schok', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-danger">🔥 Nood: Meterkastbrand</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-brand">
+                                <div class="wizard-step active" data-highlight="">
+                                    <span class="step-badge">Stap 1 van 4</span>
+                                    <h3>Gebruik NOOIT water!</h3>
+                                    <p>Water veroorzaakt onmiddellijk levensgevaarlijke steekvlammen, explosies en directe elektrocutie.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-main">
+                                    <span class="step-badge">Stap 2 van 4</span>
+                                    <h3>Schakel direct de HOOFDSCHAKELAAR uit</h3>
+                                    <p>Indien veilig bereikbaar: zet the hoofdschakelaar om om de elektrische hittebron te stoppen.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 3 van 4</span>
+                                    <h3>Blus uitsluitend met een CO2-blusser</h3>
+                                    <p>Gebruik de Koolzuursneeuwblusser (CO2) die in de buurt hangt.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 4 van 4</span>
+                                    <h3>Evacueer de keet en bel 112</h3>
+                                    <p>Sluit de deur van de meterkastruimte om zuurstoftoevoer te beperken en wacht buiten op de brandweer.</p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-brand', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-brand', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <div id="tab-werk" class="tab-content">
+                <div class="selector-card">
+                    <h3>🔍 Locatie- &amp; Stopcontact Assistent</h3>
+                    <p class="selector-instruction">Selecteer hieronder aan welke zone of muur je wilt werken. Je ziet een foto van de stopcontacten en de meterkast geeft aan welke groep eraf moet:</p>
+                    
+                    <div class="control-group">
+                        <select id="appliance-select" onchange="findRequiredBreaker()">
+                            <option value="">-- Kies een locatie / stopcontact --</option>
+                            <optgroup label="Zone: Bar &amp; Keukenblok (Links boven)">
+                                <option value="stopcontacten-bar">Stopcontacten rondom de barconstructie</option>
+                                <option value="stroom-koeling">Stroompunten hoofdkoelkast &amp; barkoeling</option>
+                            </optgroup>
+                            <optgroup label="Zone: Houten Muur &amp; Mediahoek (Links onder)">
+                                <option value="stopcontacten-muur-links">Stopcontacten op de linker houten muur</option>
+                                <option value="stroom-mediahoek">Stopcontacten TV / Mediahoek</option>
+                            </optgroup>
+                            <optgroup label="Zone: Plafond &amp; Lichtlijnen (Rechts boven)">
+                                <option value="stroompunten-plafond">Plafond stroompunten (LED &amp; Effecten)</option>
+                            </optgroup>
+                            <optgroup label="Zone: Verwarming &amp; Exterieur (Rechts onder)">
+                                <option value="stroom-kachels">Aansluitingen kachels / Verwarming</option>
+                                <option value="stroom-buiten">Buitenverlichting stopcontacten</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div id="selector-result" class="selector-result-box hidden">
+                        <img id="result-img" src="" alt="Locatie foto" class="selector-img hidden">
+                        <p id="result-text"></p>
+                        <div class="safety-reminder">⚠️ <strong>Meten is weten!</strong> Gebruik ALTIJD een multimeter of spanningzoeker op de draden voordat je ze aanraakt, ook al staat de groep uit!</div>
+                    </div>
+                </div>
+                
+                <div class="accordion-container" style="margin-top: 20px;">
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-warning">🔧 Handleiding: Stopcontact repareren</summary>
+                        <div class="accordion-content">
+                            <div class="step-wizard" id="wiz-reparatie">
+                                <div class="wizard-step active" data-highlight="hw-groep1,hw-groep2,hw-groep3,hw-groep4">
+                                    <span class="step-badge">Stap 1 van 3</span>
+                                    <h3>Schakel de juiste groep uit</h3>
+                                    <p>Druk de hendel van de bijbehorende groep stevig naar beneden in de meterkast.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-main">
+                                    <span class="step-badge">Stap 2 van 3</span>
+                                    <h3>Spanningsloosheid testen</h3>
+                                    <p>Meet het stopcontact na. Er mag absoluut geen tension op staan. Zet bij twijfel de complete <strong>HOOFDSCHAKELAAR</strong> uit.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="">
+                                    <span class="step-badge">Stap 3 van 3</span>
+                                    <h3>Draden controleren</h3>
+                                    <p>Bruin = Fase, Blauw = Nul, Geel/Groen = Aarde. Zorg dat de aders onbeschadigd zijn en stevig in de klemmen vastzitten.</p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-reparatie', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-reparatie', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="info-accordion" ontoggle="handleAccordionToggle(this)">
+                        <summary class="summary-warning">⚡ Diagnose: Kortsluiting &amp; Volledige Trajectcontrole</summary>
+                        <div class="accordion-content">
+                            <div class="selectivity-box">⚠️ <strong>Let op (Geen selectiviteit):</strong> Omdat er veel aardlekschakelaars achter elkaar staan, kan een fout in de keet ervoor zorgen dat de stroom ver terug op het terrein uitvalt. Loop dit plan lineair af!</div>
+                            
+                            <div class="step-wizard" id="wiz-kortsluiting-traject">
+                                <div class="wizard-step active" data-highlight="hw-groep1,hw-groep2,hw-groep3,hw-groep4">
+                                    <span class="step-badge">Stap 1 van 8</span>
+                                    <h3>[KEET] Schakel alle 4 de groepen volledig uit</h3>
+                                    <p>Druk de hendels van alle groepen handmatig naar beneden (G1 t/m G4).</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-aardlek-links,hw-aardlek-rechts">
+                                    <span class="step-badge">Stap 2 van 8</span>
+                                    <h3>[KEET] Schakel de uitgevallen aardlekschakelaar in</h3>
+                                    <p>Druk de hendel van de uitgevallen aardlekschakelaar (links of rechts) weer omhoog.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-groep1,hw-groep2,hw-groep3,hw-groep4">
+                                    <span class="step-badge">Stap 3 van 8</span>
+                                    <h3>[KEET] Schakel de groepen één voor één weer in</h3>
+                                    <p>Zet telkens één groep omhoog. Let goed op bij welke specifieke groep de aardlekschakelaar direct weer naar beneden klapt.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-main,hw-aardlek-links,hw-aardlek-rechts">
+                                    <span class="step-badge">Stap 4 van 8</span>
+                                    <h3>[KEET] Interne kortsluiting evalueren</h3>
+                                    <p>Slaat de aardlek direct doorslag bij een groep? Dan zit het problem intern. Haal <strong>alle stekkers</strong> van die stroomgroep uit de stopcontacten.</p>
+                                    <p>Staan alle hendels in onze kast nu omhoog, maar is er nog steeds <strong>GEEN stroom</strong>? Dan is de stroom verderop geklapt. Klik op 'Volgende'.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-main">
+                                    <span class="step-badge">Stap 5 van 8</span>
+                                    <h3>[TERREIN] Check the Paddenstoel (In de tent)</h3>
+                                    <img src="foto-paddenstoel.jpg" alt="Foto paddenstoel in tent" class="step-inline-img">
+                                    <p>Loop naar de bouwpaddenstoel in de tent. Maak de zijkant open en controleer of de aardlekschakelaar of hoofdgroep aldaar is uitgevallen.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-main">
+                                    <span class="step-badge">Stap 6 van 8</span>
+                                    <h3>[TERREIN] Check de Zeecontainer</h3>
+                                    <img src="foto-zeecontainer.jpg" alt="Meterkast Zeecontainer" class="step-inline-img">
+                                    <p>Loop naar de container, open de groepenkast en controleer of hier de aardlek of hoofdgroep eruit ligt.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-main">
+                                    <span class="step-badge">Stap 7 van 8</span>
+                                    <h3>[TERREIN] Check de Meterkast van het Bouwbedrijf</h3>
+                                    <img src="foto-meterkast-bedrijf.jpg" alt="Meterkast Bouwbedrijf" class="step-inline-img">
+                                    <p>Ga naar de meterkast van het bedrijf en controleer de specifieke aardlek en groep die onze kabel voedt.</p>
+                                </div>
+                                <div class="wizard-step" data-highlight="hw-main">
+                                    <span class="step-badge">Stap 8 van 8</span>
+                                    <h3>[TERREIN] Afstemmen met het Woonhuis van de Grondeigenaar</h3>
+                                    <p>Zit het hele terrein zonder stroom? Dan ligt de hoofdaardlek in het woonhuis eraf.</p>
+                                    <p class="danger-box">⚠️ <strong>Bel of loop direct naar de grondeigenaar toe. Ga NOOIT zomaar zelfstandig in hun privéwoning schakelen!</strong></p>
+                                </div>
+                                <div class="wizard-navigation">
+                                    <button class="wiz-btn btn-prev" onclick="navigateWizard('wiz-kortsluiting-traject', -1)" disabled>← Vorige</button>
+                                    <button class="wiz-btn btn-next" onclick="navigateWizard('wiz-kortsluiting-traject', 1)">Volgende →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <footer>
+        <p>Meterkast Instructie Keet Wûns | Mobile Optimized</p>        
+    </footer>
+
+    <div id="modal_main" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('modal_main')">&times;</span>
+            <h2 class="text-green">🟢 Hoofdschakelaar (Onder - Midden)</h2>
+            <p><strong>Doel:</strong> Volledige galvanische scheiding van de keet met het distributienet.</p>
+            <p class="danger-box"><strong>LET OP:</strong> Schakelt direct ALLE stroomgroepen tegelijk uit.</p>
+        </div>
+    </div>
+    <div id="modal_aardlek_links" class="modal">
+        <div class="modal-content"><span class="close-btn" onclick="closeModal('modal_aardlek_links')">&times;</span>
+            <h2 class="text-red">🔴 Aardlekschakelaar Links</h2><p>Beveiligde groepen: <span class="text-blue">Groep 1</span> en <span class="text-blue">Groep 2</span>.</p>
+        </div>
+    </div>
+    <div id="modal_aardlek_rechts" class="modal">
+        <div class="modal-content"><span class="close-btn" onclick="closeModal('modal_aardlek_rechts')">&times;</span>
+            <h2 class="text-red">🔴 Aardlekschakelaar Rechts</h2><p>Beveiligde groepen: <span class="text-blue">Groep 3</span> en <span class="text-blue">Groep 4</span>.</p>
+        </div>
+    </div>
+    <div id="modal_groep1" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep1')">&times;</span><h2 class="text-blue">🔵 Groep 1</h2><p>Barkoeling, stopcontacten barzijde, hoofdkoelkast, frituurpan.</p></div></div>
+    <div id="modal_groep2" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep2')">&times;</span><h2 class="text-blue">🔵 Groep 2</h2><p>Stopcontacten linkerzijde muur, extra koelkast 2, magnetron, TV.</p></div></div>
+    <div id="modal_groep3" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep3')">&times;</span><h2 class="text-blue">🔵 Groep 3</h2><p>Hoofdverlichting (LED), geluidsinstallatie, discobol, lichtbord, rookmachine.</p></div></div>
+    <div id="modal_groep4" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep4')">&times;</span><h2 class="text-blue">🔵 Groep 4</h2><p>Aansturing kachels, buitenverlichting.</p></div></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
