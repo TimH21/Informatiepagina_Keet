@@ -41,7 +41,7 @@ body {
 .interface-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; }
 
 /* STICKY VISUAL PANEL (METERKAST) */
-.sticky-visual-container { position: sticky; top: 55px; z-index: 900; background: var(--bg-color); box-shadow: 0 10px 20px rgba(0,0,0,0.4); border-bottom: 1px solid var(--border-color); }
+.sticky-visual-container { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); overflow: hidden; }
 .visual-toggle { padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; background: #1a2e1d; font-weight: 600; font-size: 14px; cursor: pointer; color: var(--text-main); user-select: none; border-bottom: 1px solid rgba(34, 197, 94, 0.2); }
 .visual-toggle:active { background: #223e27; }
 .toggle-text { color: var(--neon-green); }
