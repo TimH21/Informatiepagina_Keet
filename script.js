@@ -18,18 +18,15 @@ function switchTab(event, tabId) {
     const tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(content => content.classList.remove('active'));
     
-    // Voor mobile bottom nav
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(btn => btn.classList.remove('active'));
     
-    // Voor desktop top nav
     const tabBtns = document.querySelectorAll('.tab-btn');
     tabBtns.forEach(btn => btn.classList.remove('active'));
     
     document.getElementById(tabId).classList.add('active');
     event.currentTarget.classList.add('active');
 
-    // Scroll mooi naar boven bij tabwissel
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -64,31 +61,14 @@ function findRequiredBreaker() {
     const element = document.getElementById(data.hotspot);
     if (element) {
         element.classList.add('highlight-active');
-        toggleVisual(true); // Klap het meterkastpaneel automatisch open!
+        // Auto-open uitgeschakeld om irritatie te voorkomen conform instructie
     }
 }
 
 /**
- * Beveiliging voor de Trajectcontrole in Reparatie Tabblad
+ * Globale variabele voor status externe traject-beveiliging
  */
 let isTrajectUnlocked = false;
-function unlockTraject(event, summaryElement) {
-    if (!isTrajectUnlocked) {
-        event.preventDefault(); 
-        let pin = prompt("🔒 BEVEILIGD: Deze sectie bevat gevoelige informatie over de stroomvoorziening op het terrein.\n\nVoer de bestuurs-pincode in:");
-        
-        // Pincode is 1122
-        if (pin === "1122") { 
-            isTrajectUnlocked = true;
-            const detailsBox = summaryElement.parentElement;
-            detailsBox.open = true;
-            handleAccordionToggle(detailsBox);
-        } else if (pin !== null) {
-            alert("❌ Onjuiste pincode. Toegang geweigerd.");
-        }
-        return false;
-    }
-}
 
 /**
  * Toggle voor de Sticky Meterkast Afbeelding bovenaan
@@ -100,14 +80,14 @@ function toggleVisual(forceOpen = false) {
     if (content.classList.contains('hidden') || forceOpen === true) {
         content.classList.remove('hidden');
         chevron.style.transform = 'rotate(180deg)';
-    } else {
+    } else if (forceOpen !== true) {
         content.classList.add('hidden');
         chevron.style.transform = 'rotate(0deg)';
     }
 }
 
 /**
- * Stappen-wizards logica
+ * Stappen-wizards logica met geïntegreerde PIN-interceptie van Stap 4 -> Stap 5
  */
 function navigateWizard(wizardId, direction) {
     const wizard = document.getElementById(wizardId);
@@ -127,6 +107,24 @@ function navigateWizard(wizardId, direction) {
     const newStepIndex = currentStepIndex + direction;
 
     if (newStepIndex >= 0 && newStepIndex < steps.length) {
+        
+        // INTERCEPTIE: Als de gebruiker van stap 4 (index 3) naar stap 5 (index 4) wil gaan op het terrein
+        if (wizardId === 'wiz-kortsluiting-traject' && currentStepIndex === 3 && direction === 1) {
+            if (!isTrajectUnlocked) {
+                let pin = prompt("🔒 BEVEILIGD: De volgende stappen bevatten gevoelige informatie over de stroomvoorziening op het terrein.\n\nVoer de bestuurs-pincode in:");
+                
+                if (pin === "niks") { 
+                    isTrajectUnlocked = true; // Succesvol ontgrendeld
+                } else {
+                    if (pin !== null) {
+                        alert("❌ Onjuiste pincode. Toegang tot het externe terrein geweigerd.");
+                    }
+                    return; // Blokkeer de navigatie en blijf op stap 4
+                }
+            }
+        }
+
+        // Voer de daadwerkelijke stapwissel uit
         steps[currentStepIndex].classList.remove('active');
         steps[newStepIndex].classList.add('active');
 
@@ -166,29 +164,21 @@ function applyStepHighlight(stepElement) {
     const highlightData = stepElement.getAttribute('data-highlight');
     if (!highlightData) return;
 
-    let hasHighlight = false;
-
     if (highlightData.includes(',')) {
         const targetIds = highlightData.split(',');
         targetIds.forEach(id => {
             const element = document.getElementById(id.trim());
             if (element) {
                 element.classList.add('highlight-active');
-                hasHighlight = true;
             }
         });
     } else {
         const element = document.getElementById(highlightData.trim());
         if (element) {
             element.classList.add('highlight-active');
-            hasHighlight = true;
         }
     }
-
-    // Als een lampje moet knipperen, klap dan automatisch de meterkastfoto uit!
-    if (hasHighlight) {
-        toggleVisual(true);
-    }
+    // Auto-open toggleVisual(true) hier verwijderd, zodat het schema niet ongewenst in de weg zit!
 }
 
 function handleAccordionToggle(detailsElement) {
@@ -200,7 +190,6 @@ function handleAccordionToggle(detailsElement) {
 
     if (!detailsElement.open) {
         clearHighlights();
-        toggleVisual(false); 
         return;
     }
 
@@ -215,6 +204,12 @@ function handleAccordionToggle(detailsElement) {
     if (wizard) {
         resetWizard(wizard.id);
     }
+}
+
+function highlightHotspot(id) {
+    clearHighlights();
+    const element = document.getElementById(id);
+    if (element) element.classList.add('highlight-active');
 }
 
 function clearHighlights() {
