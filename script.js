@@ -1,19 +1,16 @@
 // Database koppeling tussen zone-stopcontacten en groepen
 const groepenMap = {
     "stopcontacten-bar": { hotspot: "hw-groep1", code: "Groep 1", img: "foto-bar-stopcontacten.jpg", info: "Schakel <strong>Groep 1</strong> uit. Dit maakt alle stopcontacten direct onder/rondom de bar spanningsloos." },
-    "stroom-koeling": { hotspot: "hw-groep1", code: "Groep 1", img: "foto-keukenblok-koeling.jpg", info: "Schakel <strong>Groep 1</strong> uit. Dit haal de spanning van de stroompunten voor de grote hoofdkoelkast en de flessenkoelkast." },
-    
+    "stroom-koeling": { hotspot: "hw-groep1", code: "Groep 1", img: "foto-keukenblok-koeling.jpg", info: "Schakel <strong>Groep 1</strong> uit. Dit haalt de spanning van de stroompunten voor de grote hoofdkoelkast en de flessenkoelkast." },
     "stopcontacten-muur-links": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-stopcontacten-muur.jpg", info: "Schakel <strong>Groep 2</strong> uit. Dit maakt de volledige rij stopcontacten op de linker houten wand spanningsloos." },
-    "stroom-mediahoek": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-mediahoek.jpg", info: "Schakel <strong>Groep 2</strong> uit. Dit schakelt de stroompunten uit van de TV." },
-    
+    "stroom-mediahoek": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-mediahoek.jpg", info: "Schakel <strong>Groep 2</strong> uit. Dit schakelt de stroompunten uit van de TV en media." },
     "stroompunten-plafond": { hotspot: "hw-groep3", code: "Groep 3", img: "foto-plafond-aansluiting.jpg", info: "Schakel <strong>Groep 3</strong> uit. Dit haalt de spanning van de plafond-stroompunten." },
-    
     "stroom-kachels": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-stroom-verwarming.jpg", info: "Schakel <strong>Groep 4</strong> uit. Dit ontkoppelt de stroomtoevoer naar de kachels." },
     "stroom-buiten": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-stroom-buiten.jpg", info: "Schakel <strong>Groep 4</strong> uit. Hiermee haal je de spanning van de buitenstopcontacten." }
 };
 
 /**
- * Switch-functionaliteit voor het hoofdmenu (Mobielvriendelijke Tabs)
+ * Switch-functionaliteit App-Navigatie onderaan het scherm
  */
 function switchTab(event, tabId) {
     clearHighlights();
@@ -21,15 +18,23 @@ function switchTab(event, tabId) {
     const tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(content => content.classList.remove('active'));
     
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    tabButtons.forEach(btn => btn.classList.remove('active'));
+    // Voor mobile bottom nav
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(btn => btn.classList.remove('active'));
+    
+    // Voor desktop top nav
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    tabBtns.forEach(btn => btn.classList.remove('active'));
     
     document.getElementById(tabId).classList.add('active');
     event.currentTarget.classList.add('active');
+
+    // Scroll mooi naar boven bij tabwissel
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /**
- * Groepenkiezer: matcht selectie aan zone-foto en hotspot
+ * Groepenkiezer logica
  */
 function findRequiredBreaker() {
     clearHighlights();
@@ -38,32 +43,71 @@ function findRequiredBreaker() {
     const resultText = document.getElementById('result-text');
     const resultImg = document.getElementById('result-img');
     
-    const value = select.value;
-    
-    if (!value || !groepenMap[value]) {
+    if (!select.value || !groepenMap[select.value]) {
         resultBox.classList.add('hidden');
-        resultImg.classList.remove('show');
+        resultImg.classList.add('hidden');
         return;
     }
     
-    const data = groepenMap[value];
+    const data = groepenMap[select.value];
     
     if (data.img) {
         resultImg.src = data.img;
-        resultImg.classList.add('show');
+        resultImg.classList.remove('hidden');
     } else {
-        resultImg.classList.remove('show');
+        resultImg.classList.add('hidden');
     }
 
     resultText.innerHTML = `<strong>Vereiste actie:</strong> ${data.info} (<span class="text-blue">${data.code}</span>)`;
     resultBox.classList.remove('hidden');
     
     const element = document.getElementById(data.hotspot);
-    if (element) element.classList.add('highlight-active');
+    if (element) {
+        element.classList.add('highlight-active');
+        toggleVisual(true); // Klap het meterkastpaneel automatisch open!
+    }
 }
 
 /**
- * Navigatie van de stappen-wizards (Universeel voor alle stappenplannen)
+ * Beveiliging voor de Trajectcontrole in Reparatie Tabblad
+ */
+let isTrajectUnlocked = false;
+function unlockTraject(event, summaryElement) {
+    if (!isTrajectUnlocked) {
+        event.preventDefault(); 
+        let pin = prompt("🔒 BEVEILIGD: Deze sectie bevat gevoelige informatie over de stroomvoorziening op het terrein.\n\nVoer de bestuurs-pincode in:");
+        
+        // Pincode is 1122
+        if (pin === "1122") { 
+            isTrajectUnlocked = true;
+            const detailsBox = summaryElement.parentElement;
+            detailsBox.open = true;
+            handleAccordionToggle(detailsBox);
+        } else if (pin !== null) {
+            alert("❌ Onjuiste pincode. Toegang geweigerd.");
+        }
+        return false;
+    }
+}
+
+/**
+ * Toggle voor de Sticky Meterkast Afbeelding bovenaan
+ */
+function toggleVisual(forceOpen = false) {
+    const content = document.getElementById('visual-content');
+    const chevron = document.getElementById('visual-chevron');
+    
+    if (content.classList.contains('hidden') || forceOpen === true) {
+        content.classList.remove('hidden');
+        chevron.style.transform = 'rotate(180deg)';
+    } else {
+        content.classList.add('hidden');
+        chevron.style.transform = 'rotate(0deg)';
+    }
+}
+
+/**
+ * Stappen-wizards logica
  */
 function navigateWizard(wizardId, direction) {
     const wizard = document.getElementById(wizardId);
@@ -122,15 +166,28 @@ function applyStepHighlight(stepElement) {
     const highlightData = stepElement.getAttribute('data-highlight');
     if (!highlightData) return;
 
+    let hasHighlight = false;
+
     if (highlightData.includes(',')) {
         const targetIds = highlightData.split(',');
         targetIds.forEach(id => {
             const element = document.getElementById(id.trim());
-            if (element) element.classList.add('highlight-active');
+            if (element) {
+                element.classList.add('highlight-active');
+                hasHighlight = true;
+            }
         });
     } else {
         const element = document.getElementById(highlightData.trim());
-        if (element) element.classList.add('highlight-active');
+        if (element) {
+            element.classList.add('highlight-active');
+            hasHighlight = true;
+        }
+    }
+
+    // Als een lampje moet knipperen, klap dan automatisch de meterkastfoto uit!
+    if (hasHighlight) {
+        toggleVisual(true);
     }
 }
 
@@ -143,10 +200,11 @@ function handleAccordionToggle(detailsElement) {
 
     if (!detailsElement.open) {
         clearHighlights();
+        toggleVisual(false); 
         return;
     }
 
-    const allAccordions = document.querySelectorAll('.info-accordion');
+    const allAccordions = document.querySelectorAll('.modern-card');
     allAccordions.forEach(acc => {
         if (acc !== detailsElement && acc.open) {
             acc.open = false;
