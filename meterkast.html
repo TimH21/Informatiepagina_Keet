@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Meterkast Hub - Keet Wûns</title>
+    <link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-content">
+            <h1>METERKAST HUB <span>Technisch Beheer</span></h1>
+            <div class="system-status">
+                <span class="status-dot"></span> Beveiligd
+            </div>
+        </div>
+    </header>
+
+    <div class="static-visual-container">
+        <h2 class="section-title" style="padding: 15px 20px 0 20px; margin: 0;">📸 Actieve Groepenkaart</h2>
+        <div class="visual-content">
+            <div class="hotspot-container">
+                <img src="meterkast-foto.jpg" alt="Meterkast Keet Wûns" id="meterkast-img">
+
+                <div id="hw-groep1" class="hotspot type-group" style="top: 37%; left: 21.5%;" onclick="openModal('modal_groep1')"><span class="hotspot-label">G1</span></div>
+                <div id="hw-groep2" class="hotspot type-group" style="top: 37%; left: 30%;" onclick="openModal('modal_groep2')"><span class="hotspot-label">G2</span></div>
+                <div id="hw-groep3" class="hotspot type-group" style="top: 37%; left: 70%;" onclick="openModal('modal_groep3')"><span class="hotspot-label">G3</span></div>
+                <div id="hw-groep4" class="hotspot type-group" style="top: 37%; left: 78.5%;" onclick="openModal('modal_groep4')"><span class="hotspot-label">G4</span></div>
+
+                <div id="hw-aardlek-links" class="hotspot type-earth" style="top: 63.5%; left: 27%;" onclick="openModal('modal_aardlek_links')"><span class="hotspot-label">ALS L</span></div>
+                <div id="hw-aardlek-rechts" class="hotspot type-earth" style="top: 63.5%; left: 73%;" onclick="openModal('modal_aardlek_rechts')"><span class="hotspot-label">ALS R</span></div>
+
+                <div id="hw-main" class="hotspot type-main" style="top: 90%; left: 50%;" onclick="openModal('modal_main')"><span class="hotspot-label">HOOFD</span></div>
+            </div>
+            <div class="visual-legend">
+                <span><span class="dot blue"></span> Groep</span>
+                <span><span class="dot red"></span> Aardlek</span>
+                <span><span class="dot green"></span> Hoofd</span>
+            </div>
+        </div>
+    </div>
+
+    <main class="app-main">
+
+        <div class="contact-card text-block-green" style="margin-bottom: 25px;">
+            <div class="contact-header">
+                <span class="icon">💡</span>
+                <h3>Snelgids: Licht direct inschakelen</h3>
+            </div>
+            <p style="margin-bottom:0; font-size:13.5px; color:#e2e8f0;">
+                Het licht aandoen door op de afstandsbediening (plakt links van de laptop aan de bar) op de witte knop <strong>"ON"</strong> te drukken. Uitdoen met de rode knop <strong>"OFF"</strong>.
+            </p>
+        </div>
+        
+        <section id="tab-storing" class="tab-content active">
+            <h2 class="section-title">Foutopsporing &amp; Diagnose</h2>
+            <div class="card-list">
+                
+                <details class="modern-card border-warning" open>
+                    <summary><span class="card-icon">⚡</span> Diagnose: Kortsluiting &amp; Trajectcontrole</summary>
+                    <div class="card-body">
+                        <div class="warning-box" style="margin-bottom: 15px;">⚠️ <strong>Selectiviteit:</strong> Omdat er veel aardlekschakelaars achter elkaar staan, kan een fout in de keet ervoor zorgen dat de stroom ver terug op het terrein uitvalt. Loop dit plan lineair af!</div>
+                        
+                        <div class="step-wizard" id="wiz-kortsluiting-traject">
+                            <div class="wizard-step active" data-highlight="hw-groep1,hw-groep2,hw-groep3,hw-groep4">
+                                <span class="step-badge">Stap 1/8</span>
+                                <h3>[KEET] Groepen uitschakelen</h3>
+                                <p>Druk de hendels van alle groepen (G1 t/m G4) handmatig naar beneden.</p>
+                            </div>
+                            <div class="wizard-step" data-highlight="hw-aardlek-links,hw-aardlek-rechts">
+                                <span class="step-badge">Stap 2/8</span>
+                                <h3>[KEET] Aardlekschakelaar inschakelen</h3>
+                                <p>Druk de hendel van de uitgevallen aardlekschakelaar (links of rechts) weer omhoog.</p>
+                            </div>
+                            <div class="wizard-step" data-highlight="hw-groep1,hw-groep2,hw-groep3,hw-groep4">
+                                <span class="step-badge">Stap 3/8</span>
+                                <h3>[KEET] Groepen 1 voor 1 aan</h3>
+                                <p>Zet telkens één groep omhoog. Let op bij welke groep de aardlek direct weer naar beneden klapt.</p>
+                            </div>
+                            <div class="wizard-step" data-highlight="hw-main,hw-aardlek-links,hw-aardlek-rechts">
+                                <span class="step-badge">Stap 4/8</span>
+                                <h3>[KEET] Evaluatie &amp; Schakeling</h3>
+                                <p>Slaat de aardlek direct door? Dan zit het intern (trek stekkers uit). Staan alle hendels omhoog maar is er <strong>GEEN stroom</strong>? Klik op 'Volgende' om de rest van het terrein te checken (Wachtwoord vereist).</p>
+                            </div>
+                            
+                            <div class="wizard-step" data-highlight="hw-main">
+                                <span class="step-badge danger">Stap 5/8 (🔒 Extern)</span>
+                                <h3>[TERREIN] Check de Paddenstoel (In de tent)</h3>
+                                <img src="foto-paddenstoel.jpg" alt="Foto paddenstoel in tent" class="step-inline-img">
+                                <p>Maak de zijkant van de paddenstoel open. Controleer of de aardlekschakelaar of hoofdgroep aldaar is uitgevallen en schakel deze in.</p>
+                            </div>
+                            <div class="wizard-step" data-highlight="hw-main">
+                                <span class="step-badge danger">Stap 6/8 (🔒 Extern)</span>
+                                <h3>[TERREIN] Check de Zeecontainer</h3>
+                                <img src="foto-zeecontainer.jpg" alt="Meterkast Zeecontainer" class="step-inline-img">
+                                <p>Open de groepenkast in de zeecontainer en controleer de aardlek of hoofdgroep.</p>
+                            </div>
+                            <div class="wizard-step" data-highlight="hw-main">
+                                <span class="step-badge danger">Stap 7/8 (🔒 Extern)</span>
+                                <h3>[TERREIN] Check de Meterkast Bouwbedrijf</h3>
+                                <img src="foto-meterkast-bedrijf.jpg" alt="Meterkast Bouwbedrijf" class="step-inline-img">
+                                <p>Ga naar de meterkast van het bedrijf en controleer de specifieke groep die onze kabel voedt.</p>
+                                <div class="warning-box">⚠️ <strong>Neem contact op met Theun of een medewerker van EcoHûs!</strong> Ga NOOIT zelf in schakelen.</div>
+                            </div>
+                            <div class="wizard-step" data-highlight="hw-main">
+                                <span class="step-badge danger">Stap 8/8 (🔒 Extern)</span>
+                                <h3>[TERREIN] Woonhuis Grondeigenaar</h3>
+                                <p>Zit het hele terrein zonder stroom? Dan ligt de hoofdaardlek in het woonhuis eraf.</p>
+                                <div class="warning-box">⚠️ <strong>Bel de grondeigenaar!</strong> Ga NOOIT zelf in de privéwoning schakelen.</div>
+                            </div>
+                            <div class="wizard-nav"><button class="btn-prev" onclick="navigateWizard('wiz-kortsluiting-traject', -1)">Vorige</button><button class="btn-next" onclick="navigateWizard('wiz-kortsluiting-traject', 1)">Volgende →</button></div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="modern-card">
+                    <summary><span class="card-icon">🌍</span> Totale Netstoring (Liander)</summary>
+                    <div class="card-body">
+                        <p class="text-block">Als alle schakelaars op het terrein omhoog staan maar alles is zwart, controleer dan de straatverlichting of omliggende gebouwen.</p>
+                        <p class="text-block">Meld de storing of bekijk de status via netbeheerder Liander (Nationaal Storingsnummer: <strong class="highlight-text">0800-9009</strong>). Schakel bij langdurige uitval onze hoofdschakelaar preventief uit.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+        <section id="tab-werk" class="tab-content">
+            <h2 class="section-title">Onderhoud &amp; Zonetester</h2>
+            
+            <div class="selector-card">
+                <h3>🔍 Groepen &amp; Foto Assistent</h3>
+                <p>Selecteer een stopcontact of zone die je wilt uitschakelen. De app licht de juiste groep op:</p>
+                <select id="appliance-select" class="modern-select" onchange="findRequiredBreaker()">
+                    <option value="">-- Kies een locatie / stopcontact --</option>
+                    <optgroup label="Zone: Bar &amp; Keukenblok">
+                        <option value="stopcontacten-bar">Stopcontacten rondom de barconstructie</option>
+                        <option value="stroom-koeling">Stroompunten hoofdkoelkast &amp; barkoeling</option>
+                    </optgroup>
+                    <optgroup label="Zone: Houten Muur &amp; Mediahoek">
+                        <option value="stopcontacten-muur-links">Stopcontacten linker houten muur</option>
+                        <option value="stroom-mediahoek">Stopcontacten TV / Mediahoek</option>
+                    </optgroup>
+                    <optgroup label="Zone: Plafond &amp; Exterieur">
+                        <option value="stroompunten-plafond">Plafond stroompunten (LED &amp; Effecten)</option>
+                        <option value="stroom-kachels">Aansluitingen kachels / Verwarming</option>
+                        <option value="stroom-buiten">Buitenverlichting stopcontacten</option>
+                    </optgroup>
+                </select>
+
+                <div id="selector-result" class="selector-result-box hidden">
+                    <img id="result-img" src="" alt="Locatie foto" class="selector-img hidden">
+                    <p id="result-text"></p>
+                </div>
+            </div>
+
+            <div class="card-list" style="margin-top: 20px;">
+                <details class="modern-card">
+                    <summary><span class="card-icon">🔌</span> Stopcontact veilig repareren</summary>
+                    <div class="card-body">
+                        <div class="step-wizard" id="wiz-reparatie">
+                            <div class="wizard-step active" data-highlight="hw-groep1,hw-groep2,hw-groep3,hw-groep4">
+                                <span class="step-badge">Stap 1/3</span>
+                                <h3>Schakel de juiste groep uit</h3>
+                                <p>Druk de hendel van de bijbehorende groep stevig naar beneden in de meterkast.</p>
+                            </div>
+                            <div class="wizard-step" data-highlight="hw-main">
+                                <span class="step-badge">Stap 2/3</span>
+                                <h3>Spanningsloosheid testen</h3>
+                                <p>Meet het stopcontact na. Er mag absoluut geen spanning op staan. Zet bij twijfel de complete <strong>HOOFDSCHAKELAAR</strong> uit.</p>
+                            </div>
+                            <div class="wizard-step" data-highlight="">
+                                <span class="step-badge">Stap 3/3</span>
+                                <h3>Draden controleren</h3>
+                                <p>Bruin = Fase, Blauw = Nul, Geel/Groen = Aarde. Zorg dat de aders onbeschadigd vastzitten.</p>
+                            </div>
+                            <div class="wizard-nav"><button class="btn-prev" onclick="navigateWizard('wiz-reparatie', -1)" disabled>Vorige</button><button class="btn-next" onclick="navigateWizard('wiz-reparatie', 1)">Volgende →</button></div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="bottom-app-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Keet Hub</span>
+        </a>
+        <button class="nav-item active" onclick="switchTab(event, 'tab-storing')">
+            <span class="nav-icon">⚡</span>
+            <span class="nav-text">Diagnose</span>
+        </button>
+        <button class="nav-item" onclick="switchTab(event, 'tab-werk')">
+            <span class="nav-icon">🔧</span>
+            <span class="nav-text">Assistent</span>
+        </button>
+    </nav>
+
+    <div id="modal_main" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_main')">&times;</span><h2 class="text-green">🟢 Hoofdschakelaar</h2><p>Schakelt direct ALLE interne stroomgroepen tegelijk uit.</p></div></div>
+    <div id="modal_aardlek_links" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_aardlek_links')">&times;</span><h2 class="text-red">🔴 Aardlekschakelaar Links</h2><p>Beveiligde groepen: Groep 1 en Groep 2.</p></div></div>
+    <div id="modal_aardlek_rechts" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_aardlek_rechts')">&times;</span><h2 class="text-red">🔴 Aardlekschakelaar Rechts</h2><p>Beveiligde groepen: Groep 3 en Groep 4.</p></div></div>
+    <div id="modal_groep1" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep1')">&times;</span><h2 class="text-blue">🔵 Groep 1</h2><p>Barkoeling, stopcontacten bar, hoofdkoelkast, frituurpan.</p></div></div>
+    <div id="modal_groep2" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep2')">&times;</span><h2 class="text-blue">🔵 Groep 2</h2><p>Stopcontacten linkermuur, koelkast 2, magnetron, TV.</p></div></div>
+    <div id="modal_groep3" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep3')">&times;</span><h2 class="text-blue">🔵 Groep 3</h2><p>Hoofdverlichting (LED), geluidsinstallatie, discobol, lichtbord, rookmachine.</p></div></div>
+    <div id="modal_groep4" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep4')">&times;</span><h2 class="text-blue">🔵 Groep 4</h2><p>Kachels, buitenverlichting.</p></div></div>
+
+    <script src="script.js?v=5"></script>
+</body>
+</html>
