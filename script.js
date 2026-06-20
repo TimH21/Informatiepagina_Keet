@@ -1,39 +1,43 @@
 // Exacte fysieke indeling van de Keet Wûns groepen
 const groepenMap = {
     "kachel-3kw": { hotspot: "hw-groep1", code: "Groep 1", img: "foto-kachel-3kw.jpg", info: "Schakel <strong>Groep 1</strong> uit. Dit ontkoppelt de 3 kW kachel." },
-    
     "televisie": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-televisie.jpg", info: "Schakel <strong>Groep 2</strong> uit. Dit schakelt de TV en de laptop uit." },
     "wifi": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-wifi.jpg", info: "Schakel <strong>Groep 2</strong> uit. Let op: hiermee valt het internet/WiFi uit!" },
     "koelkasten": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-koelkasten.jpg", info: "Schakel <strong>Groep 2</strong> uit. Let op: hiermee vallen beide koelkasten uit." },
     "kachel-2kw": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-kachel-2kw.jpg", info: "Schakel <strong>Groep 2</strong> uit. Dit ontkoppelt de 2 kW kachel." },
-    
     "buitenlicht": { hotspot: "hw-groep3", code: "Groep 3", img: "foto-stroom-buiten.jpg", info: "Schakel <strong>Groep 3</strong> uit. Dit maakt alle buitenstroom en -verlichting spanningsloos." },
     "frituurpan": { hotspot: "hw-groep3", code: "Groep 3", img: "foto-frituurpan.jpg", info: "Schakel <strong>Groep 3</strong> uit. Dit schakelt de stroom naar de frituurpan buiten af." },
-    
     "muziekbox": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-muziekbox.jpg", info: "Schakel <strong>Groep 4</strong> uit. Dit beveiligt de stroomtoevoer naar de Fenton muziekbox." },
     "ledstrips": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-ledstrips.jpg", info: "Schakel <strong>Groep 4</strong> uit. De LED-strips en partylichten vallen hiermee uit." },
     "discobol": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-discobol.jpg", info: "Schakel <strong>Groep 4</strong> uit. <br><span class='text-red'>⚠️ LET OP:</span> Hier zit ook de noodverlichting op!" },
     "rookmachine": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-rookmachine.jpg", info: "Schakel <strong>Groep 4</strong> uit. Dit ontkoppelt de rookmachine." }
 };
 
+/**
+ * Switch-functionaliteit App-Navigatie onderaan het scherm
+ */
 function switchTab(event, tabId) {
     clearHighlights();
     
+    // De content switchen
     const tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(content => content.classList.remove('active'));
     
+    // Actieve iconen in Bottom Nav instellen
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(btn => btn.classList.remove('active'));
     
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    tabBtns.forEach(btn => btn.classList.remove('active'));
-    
-    document.getElementById(tabId).classList.add('active');
-    event.currentTarget.classList.add('active');
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Voorkom error als het een element was via A-tag
+    if (document.getElementById(tabId)) {
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 }
 
+/**
+ * Groepenkiezer logica
+ */
 function findRequiredBreaker() {
     clearHighlights();
     const select = document.getElementById('appliance-select');
@@ -65,15 +69,20 @@ function findRequiredBreaker() {
     }
 }
 
+/**
+ * Globale variabele voor status externe traject-beveiliging
+ */
 let isTrajectUnlocked = false;
 
+/**
+ * Toggle voor de Sticky Meterkast Afbeelding bovenaan
+ */
 function toggleVisual(forceOpen = false) {
     const content = document.getElementById('visual-content');
     const chevron = document.getElementById('visual-chevron');
     
-    if (!content) return;
+    if (!content) return; 
 
-    // Wordt nu uitsluitend handmatig geopend, of gesloten
     if (content.classList.contains('hidden') || forceOpen === true) {
         content.classList.remove('hidden');
         if (chevron) chevron.style.transform = 'rotate(180deg)';
@@ -83,6 +92,9 @@ function toggleVisual(forceOpen = false) {
     }
 }
 
+/**
+ * Stappen-wizards logica met geïntegreerde wachtwoord check
+ */
 function navigateWizard(wizardId, direction) {
     const wizard = document.getElementById(wizardId);
     if (!wizard) return;
@@ -102,23 +114,24 @@ function navigateWizard(wizardId, direction) {
 
     if (newStepIndex >= 0 && newStepIndex < steps.length) {
         
-        // INTERCEPTIE WACHTWOORD: Stap 4 naar Stap 5
+        // INTERCEPTIE WACHTWOORD: Stap 4 naar Stap 5 bij trajectcontrole
         if (wizardId === 'wiz-kortsluiting-traject' && currentStepIndex === 3 && direction === 1) {
             if (!isTrajectUnlocked) {
                 let pw = prompt("🔒 BEVEILIGD: De volgende stappen bevatten gevoelige informatie over de stroomvoorziening op het terrein.\n\nVoer het wachtwoord in:");
                 
-                // Het nieuwe wachtwoord is: niks
+                // Het nieuwe wachtwoord = niks
                 if (pw === "niks") { 
-                    isTrajectUnlocked = true; 
+                    isTrajectUnlocked = true; // Ontgrendeld!
                 } else {
                     if (pw !== null) {
                         alert("❌ Onjuist wachtwoord. Toegang tot het externe terrein geweigerd.");
                     }
-                    return; 
+                    return; // Blokkeer navigatie
                 }
             }
         }
 
+        // Voer de daadwerkelijke stapwissel uit
         steps[currentStepIndex].classList.remove('active');
         steps[newStepIndex].classList.add('active');
 
@@ -162,11 +175,15 @@ function applyStepHighlight(stepElement) {
         const targetIds = highlightData.split(',');
         targetIds.forEach(id => {
             const element = document.getElementById(id.trim());
-            if (element) element.classList.add('highlight-active');
+            if (element) {
+                element.classList.add('highlight-active');
+            }
         });
     } else {
         const element = document.getElementById(highlightData.trim());
-        if (element) element.classList.add('highlight-active');
+        if (element) {
+            element.classList.add('highlight-active');
+        }
     }
 }
 
@@ -180,6 +197,8 @@ function handleAccordionToggle(detailsElement) {
 
     if (!detailsElement.open) {
         clearHighlights();
+        // Sluit ook de visual als het formulier wordt ingeklapt
+        toggleVisual(false); 
         return;
     }
 
