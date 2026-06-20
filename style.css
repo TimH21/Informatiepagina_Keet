@@ -23,7 +23,7 @@
 
 body { 
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; 
-    margin: 0; padding: 0 0 80px 0; /* Belangrijk: ruimte voor de bottom nav */
+    margin: 0; padding: 0 0 80px 0; 
     background-color: var(--bg-color); 
     color: var(--text-main); 
     overflow-x: hidden; 
@@ -57,20 +57,21 @@ body {
 .hotspot-label { font-size: 8px; font-weight: 900; color: #ffffff; text-shadow: 0 1px 3px #000; }
 .hotspot.type-group { background-color: rgba(0, 210, 255, 0.85); border-color: var(--group-blue); }
 .hotspot.type-earth { background-color: rgba(255, 51, 102, 0.85); border-color: var(--neon-red); }
-.hotspot.type-main { background-color: rgba(34, 197, 94, 0.85); border-color: var(--neon-green); }
+.hotspot.type-main { background-color: rgba(34, 197, 94, 0.85); border-color: var(--success-green); }
 
 .hotspot.highlight-active { transform: translate(-50%, -50%) scale(1.6) !important; border-color: #ffffff !important; box-shadow: 0 0 35px #ffffff, 0 0 15px inherit !important; z-index: 999; animation: criticalFlash 0.5s infinite alternate !important; }
 @keyframes criticalFlash { 0% { filter: brightness(1); } 100% { filter: brightness(1.8); } }
 
 .visual-legend { display: flex; gap: 15px; margin-top: 10px; justify-content: center; font-size: 11px; color: var(--text-muted); font-weight: 500; }
 .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-.dot.blue { background: var(--group-blue); } .dot.red { background: var(--neon-red); } .dot.green { background: var(--neon-green); }
+.dot.blue { background: var(--group-blue); } .dot.red { background: var(--neon-red); } .dot.green { background: var(--success-green); }
 
 /* CONTENT GEBIED */
 .app-main { padding: 20px; }
 .tab-navigation { display: none; } 
 .tab-content { display: none; animation: fadeIn 0.3s ease; } 
 .tab-content.active { display: block; }
+.section-title { font-size: 15px; color: var(--neon-green); margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* CONTACT KAART */
@@ -107,5 +108,49 @@ body {
 .wizard-step p { margin: 0 0 12px 0; font-size: 14px; color: var(--text-muted); line-height: 1.5; }
 .highlight-text { color: var(--neon-green); font-size: 15px; }
 
-.warning-box { background: rgba(245, 158, 11, 0.1); border-left: 3px solid var(--warning-yellow); padding: 12px; border-radius: 6px; font-size: 13px; color: #fcd34d; margin-bottom: 15px
-              
+.warning-box { background: rgba(245, 158, 11, 0.1); border-left: 3px solid var(--warning-yellow); padding: 12px; border-radius: 6px; font-size: 13px; color: #fcd34d; margin-bottom: 15px; line-height: 1.4; }
+.text-block { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 15px; }
+
+/* Knoppen */
+.wizard-nav { display: flex; gap: 12px; margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); }
+.btn-prev, .btn-next { flex: 1; padding: 14px; background: #27272a; border: none; color: #fff; font-size: 14px; font-weight: 600; border-radius: 10px; cursor: pointer; transition: var(--transition); }
+.btn-next { background: var(--primary-green); }
+.btn-prev:hover:not(:disabled) { background: #3f3f46; }
+.btn-next:hover:not(:disabled) { background: #166534; }
+.btn-prev:disabled, .btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* FOTO ASSISTENT */
+.selector-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
+.selector-card h3 { margin: 0 0 8px 0; font-size: 16px; color: var(--neon-green); }
+.selector-instruction { font-size: 13px; color: var(--text-muted); margin: 0 0 15px 0; }
+#appliance-select { width: 100%; padding: 14px; background: #09090b; border: 1px solid var(--border-color); color: #fff; font-size: 14px; border-radius: 10px; outline: none; appearance: none; margin-bottom: 10px; }
+#appliance-select:focus { border-color: var(--neon-green); }
+
+.selector-result-box { margin-top: 15px; padding: 15px; background: rgba(34, 197, 94, 0.05); border-radius: 10px; border: 1px solid rgba(34, 197, 94, 0.2); }
+.selector-result-box.hidden { display: none; }
+#result-text { margin: 0 0 12px 0; font-size: 14px; color: #fff; line-height: 1.5; }
+.selector-img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
+.step-inline-img { width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; margin: 10px 0; }
+
+/* BOTTOM APP NAVIGATION (NATIVE FEEL - ALTIJD ZICHTBAAR) */
+.bottom-app-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 70px; background: rgba(11, 37, 20, 0.95); backdrop-filter: blur(15px); border-top: 1px solid rgba(34, 197, 94, 0.2); display: flex; justify-content: center; gap: 15%; align-items: center; z-index: 1000; padding-bottom: env(safe-area-inset-bottom); }
+.nav-item { background: none; border: none; color: #71717a; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 20px; cursor: pointer; transition: var(--transition); outline: none; text-decoration: none; }
+.nav-icon { font-size: 20px; filter: grayscale(100%) opacity(0.6); transition: var(--transition); }
+.nav-text { font-size: 11px; font-weight: 600; }
+.nav-item.active { color: var(--neon-green); }
+.nav-item.active .nav-icon { filter: grayscale(0%) opacity(1); transform: scale(1.1); }
+
+/* MODALS */
+.modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px); }
+.modal-content { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 25px; width: 90%; max-width: 400px; margin: 40% auto; position: relative; }
+.close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; color: var(--text-muted); cursor: pointer; }
+.text-blue { color: var(--group-blue); } .text-red { color: var(--neon-red); } .text-green { color: var(--success-green); }
+
+/* DESKTOP OPTIMALISATIE */
+@media (min-width: 950px) {
+    .interface-container { flex-direction: row; display: grid; grid-template-columns: 1.1fr 1fr; max-width: 1200px; }
+    .visual-toggle { display: none; }
+    .visual-content.hidden { max-height: 1000px; padding: 15px 20px; border-top: 1px solid var(--border-color); }
+    .sticky-visual-container { background: transparent; box-shadow: none; border: none; }
+    .bottom-app-nav { gap: 10%; }
+}
