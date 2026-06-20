@@ -1,16 +1,12 @@
-// Exacte fysieke indeling van de Keet Wûns groepen
+// Database koppeling tussen zone-stopcontacten en groepen
 const groepenMap = {
-    "kachel-3kw": { hotspot: "hw-groep1", code: "Groep 1", img: "foto-kachel-3kw.jpg", info: "Schakel <strong>Groep 1</strong> uit. Dit ontkoppelt de 3 kW kachel." },
-    "televisie": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-televisie.jpg", info: "Schakel <strong>Groep 2</strong> uit. Dit schakelt de TV en de laptop uit." },
-    "wifi": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-wifi.jpg", info: "Schakel <strong>Groep 2</strong> uit. Let op: hiermee valt het internet/WiFi uit!" },
-    "koelkasten": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-koelkasten.jpg", info: "Schakel <strong>Groep 2</strong> uit. Let op: hiermee vallen beide koelkasten uit." },
-    "kachel-2kw": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-kachel-2kw.jpg", info: "Schakel <strong>Groep 2</strong> uit. Dit ontkoppelt de 2 kW kachel." },
-    "buitenlicht": { hotspot: "hw-groep3", code: "Groep 3", img: "foto-stroom-buiten.jpg", info: "Schakel <strong>Groep 3</strong> uit. Dit maakt alle buitenstroom en -verlichting spanningsloos." },
-    "frituurpan": { hotspot: "hw-groep3", code: "Groep 3", img: "foto-frituurpan.jpg", info: "Schakel <strong>Groep 3</strong> uit. Dit schakelt de stroom naar de frituurpan buiten af." },
-    "muziekbox": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-muziekbox.jpg", info: "Schakel <strong>Groep 4</strong> uit. Dit beveiligt de stroomtoevoer naar de Fenton muziekbox." },
-    "ledstrips": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-ledstrips.jpg", info: "Schakel <strong>Groep 4</strong> uit. De LED-strips en partylichten vallen hiermee uit." },
-    "discobol": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-discobol.jpg", info: "Schakel <strong>Groep 4</strong> uit. <br><span class='text-red'>⚠️ LET OP:</span> Hier zit ook de noodverlichting op!" },
-    "rookmachine": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-rookmachine.jpg", info: "Schakel <strong>Groep 4</strong> uit. Dit ontkoppelt de rookmachine." }
+    "stopcontacten-bar": { hotspot: "hw-groep1", code: "Groep 1", img: "foto-bar-stopcontacten.jpg", info: "Schakel <strong>Groep 1</strong> uit. Dit maakt alle stopcontacten direct onder/rondom de bar spanningsloos." },
+    "stroom-koeling": { hotspot: "hw-groep1", code: "Groep 1", img: "foto-keukenblok-koeling.jpg", info: "Schakel <strong>Groep 1</strong> uit. Dit haalt de spanning van de stroompunten voor de grote hoofdkoelkast en de flessenkoelkast." },
+    "stopcontacten-muur-links": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-stopcontacten-muur.jpg", info: "Schakel <strong>Groep 2</strong> uit. Dit maakt de volledige rij stopcontacten op de linker houten wand spanningsloos." },
+    "stroom-mediahoek": { hotspot: "hw-groep2", code: "Groep 2", img: "foto-mediahoek.jpg", info: "Schakel <strong>Groep 2</strong> uit. Dit schakelt de stroompunten uit van de TV en media." },
+    "stroompunten-plafond": { hotspot: "hw-groep3", code: "Groep 3", img: "foto-plafond-aansluiting.jpg", info: "Schakel <strong>Groep 3</strong> uit. Dit haalt de spanning van de plafond-stroompunten." },
+    "stroom-kachels": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-stroom-verwarming.jpg", info: "Schakel <strong>Groep 4</strong> uit. Dit ontkoppelt de stroomtoevoer naar de kachels." },
+    "stroom-buiten": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-stroom-buiten.jpg", info: "Schakel <strong>Groep 4</strong> uit. Hiermee haal je de spanning van de buitenstopcontacten." }
 };
 
 /**
@@ -81,7 +77,7 @@ function toggleVisual(forceOpen = false) {
     const content = document.getElementById('visual-content');
     const chevron = document.getElementById('visual-chevron');
     
-    if (!content) return; 
+    if (!content) return; // Beveiliging voor pagina's waar hij niet op staat
 
     if (content.classList.contains('hidden') || forceOpen === true) {
         content.classList.remove('hidden');
@@ -93,7 +89,7 @@ function toggleVisual(forceOpen = false) {
 }
 
 /**
- * Stappen-wizards logica met geïntegreerde wachtwoord check
+ * Stappen-wizards logica met geïntegreerde wachtwoord ('niks') check
  */
 function navigateWizard(wizardId, direction) {
     const wizard = document.getElementById(wizardId);
@@ -114,12 +110,12 @@ function navigateWizard(wizardId, direction) {
 
     if (newStepIndex >= 0 && newStepIndex < steps.length) {
         
-        // INTERCEPTIE WACHTWOORD: Stap 4 naar Stap 5 bij trajectcontrole
+        // INTERCEPTIE: Stap 4 (index 3) naar stap 5 (index 4) bij trajectcontrole
         if (wizardId === 'wiz-kortsluiting-traject' && currentStepIndex === 3 && direction === 1) {
             if (!isTrajectUnlocked) {
                 let pw = prompt("🔒 BEVEILIGD: De volgende stappen bevatten gevoelige informatie over de stroomvoorziening op het terrein.\n\nVoer het wachtwoord in:");
                 
-                // Het nieuwe wachtwoord = niks
+                // Het wachtwoord veranderd naar "niks"
                 if (pw === "niks") { 
                     isTrajectUnlocked = true; // Ontgrendeld!
                 } else {
@@ -197,8 +193,6 @@ function handleAccordionToggle(detailsElement) {
 
     if (!detailsElement.open) {
         clearHighlights();
-        // Sluit ook de visual als het formulier wordt ingeklapt
-        toggleVisual(false); 
         return;
     }
 
@@ -213,6 +207,12 @@ function handleAccordionToggle(detailsElement) {
     if (wizard) {
         resetWizard(wizard.id);
     }
+}
+
+function highlightHotspot(id) {
+    clearHighlights();
+    const element = document.getElementById(id);
+    if (element) element.classList.add('highlight-active');
 }
 
 function clearHighlights() {
