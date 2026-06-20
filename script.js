@@ -1,4 +1,3 @@
-// Database koppeling tussen zone-stopcontacten en groepen
 const groepenMap = {
     "stopcontacten-bar": { hotspot: "hw-groep1", code: "Groep 1", img: "foto-bar-stopcontacten.jpg", info: "Schakel <strong>Groep 1</strong> uit. Dit maakt alle stopcontacten direct onder/rondom de bar spanningsloos." },
     "stroom-koeling": { hotspot: "hw-groep1", code: "Groep 1", img: "foto-keukenblok-koeling.jpg", info: "Schakel <strong>Groep 1</strong> uit. Dit haalt de spanning van de stroompunten voor de grote hoofdkoelkast en de flessenkoelkast." },
@@ -9,30 +8,21 @@ const groepenMap = {
     "stroom-buiten": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-stroom-buiten.jpg", info: "Schakel <strong>Groep 4</strong> uit. Hiermee haal je de spanning van de buitenstopcontacten." }
 };
 
-/**
- * Switch-functionaliteit App-Navigatie onderaan het scherm
- */
 function switchTab(event, tabId) {
     clearHighlights();
-    
     const tabContents = document.querySelectorAll('.tab-content');
     tabContents.forEach(content => content.classList.remove('active'));
     
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(btn => btn.classList.remove('active'));
     
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    tabBtns.forEach(btn => btn.classList.remove('active'));
-    
-    document.getElementById(tabId).classList.add('active');
-    event.currentTarget.classList.add('active');
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (document.getElementById(tabId)) {
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 }
 
-/**
- * Groepenkiezer logica
- */
 function findRequiredBreaker() {
     clearHighlights();
     const select = document.getElementById('appliance-select');
@@ -40,55 +30,28 @@ function findRequiredBreaker() {
     const resultText = document.getElementById('result-text');
     const resultImg = document.getElementById('result-img');
     
-    if (!select.value || !groepenMap[select.value]) {
-        resultBox.classList.add('hidden');
-        resultImg.classList.add('hidden');
+    if (!select || !select.value || !groepenMap[select.value]) {
+        if(resultBox) resultBox.classList.add('hidden');
+        if(resultImg) resultImg.classList.add('hidden');
         return;
     }
     
     const data = groepenMap[select.value];
-    
-    if (data.img) {
+    if (data.img && resultImg) {
         resultImg.src = data.img;
         resultImg.classList.remove('hidden');
-    } else {
-        resultImg.classList.add('hidden');
     }
-
-    resultText.innerHTML = `<strong>Vereiste actie:</strong> ${data.info} (<span class="text-blue">${data.code}</span>)`;
-    resultBox.classList.remove('hidden');
+    if(resultText) resultText.innerHTML = `<strong>Vereiste actie:</strong> ${data.info}`;
+    if(resultBox) resultBox.classList.remove('hidden');
     
     const element = document.getElementById(data.hotspot);
     if (element) {
         element.classList.add('highlight-active');
-        // Auto-open uitgeschakeld om irritatie te voorkomen conform instructie
     }
 }
 
-/**
- * Globale variabele voor status externe traject-beveiliging
- */
 let isTrajectUnlocked = false;
 
-/**
- * Toggle voor de Sticky Meterkast Afbeelding bovenaan
- */
-function toggleVisual(forceOpen = false) {
-    const content = document.getElementById('visual-content');
-    const chevron = document.getElementById('visual-chevron');
-    
-    if (content.classList.contains('hidden') || forceOpen === true) {
-        content.classList.remove('hidden');
-        chevron.style.transform = 'rotate(180deg)';
-    } else if (forceOpen !== true) {
-        content.classList.add('hidden');
-        chevron.style.transform = 'rotate(0deg)';
-    }
-}
-
-/**
- * Stappen-wizards logica met geïntegreerde PIN-interceptie van Stap 4 -> Stap 5
- */
 function navigateWizard(wizardId, direction) {
     const wizard = document.getElementById(wizardId);
     if (!wizard) return;
@@ -107,24 +70,20 @@ function navigateWizard(wizardId, direction) {
     const newStepIndex = currentStepIndex + direction;
 
     if (newStepIndex >= 0 && newStepIndex < steps.length) {
-        
-        // INTERCEPTIE: Als de gebruiker van stap 4 (index 3) naar stap 5 (index 4) wil gaan op het terrein
         if (wizardId === 'wiz-kortsluiting-traject' && currentStepIndex === 3 && direction === 1) {
             if (!isTrajectUnlocked) {
-                let pin = prompt("🔒 BEVEILIGD: De volgende stappen bevatten gevoelige informatie over de stroomvoorziening op het terrein.\n\nVoer de bestuurs-pincode in:");
+                let pw = prompt("🔒 BEVEILIGD: De volgende stappen bevatten gevoelige informatie over het stroomterrein.\n\nVoer het wachtwoord in:");
                 
-                if (pin === "niks") { 
-                    isTrajectUnlocked = true; // Succesvol ontgrendeld
+                // Het Wachtwoord!
+                if (pw === "niks") { 
+                    isTrajectUnlocked = true; 
                 } else {
-                    if (pin !== null) {
-                        alert("❌ Onjuiste pincode. Toegang tot het externe terrein geweigerd.");
-                    }
-                    return; // Blokkeer de navigatie en blijf op stap 4
+                    if (pw !== null) alert("❌ Onjuist wachtwoord. Toegang tot extern terrein geweigerd.");
+                    return; 
                 }
             }
         }
 
-        // Voer de daadwerkelijke stapwissel uit
         steps[currentStepIndex].classList.remove('active');
         steps[newStepIndex].classList.add('active');
 
@@ -141,7 +100,6 @@ function navigateWizard(wizardId, direction) {
 function resetWizard(wizardId) {
     const wizard = document.getElementById(wizardId);
     if (!wizard) return;
-
     const steps = wizard.querySelectorAll('.wizard-step');
     steps.forEach((step, index) => {
         if (index === 0) {
@@ -168,24 +126,20 @@ function applyStepHighlight(stepElement) {
         const targetIds = highlightData.split(',');
         targetIds.forEach(id => {
             const element = document.getElementById(id.trim());
-            if (element) {
-                element.classList.add('highlight-active');
-            }
+            if (element) element.classList.add('highlight-active');
         });
     } else {
         const element = document.getElementById(highlightData.trim());
-        if (element) {
-            element.classList.add('highlight-active');
-        }
+        if (element) element.classList.add('highlight-active');
     }
-    // Auto-open toggleVisual(true) hier verwijderd, zodat het schema niet ongewenst in de weg zit!
 }
 
 function handleAccordionToggle(detailsElement) {
     const select = document.getElementById('appliance-select');
     if (select) {
         select.value = "";
-        document.getElementById('selector-result').classList.add('hidden');
+        const resBox = document.getElementById('selector-result');
+        if(resBox) resBox.classList.add('hidden');
     }
 
     if (!detailsElement.open) {
@@ -195,28 +149,16 @@ function handleAccordionToggle(detailsElement) {
 
     const allAccordions = document.querySelectorAll('.modern-card');
     allAccordions.forEach(acc => {
-        if (acc !== detailsElement && acc.open) {
-            acc.open = false;
-        }
+        if (acc !== detailsElement && acc.open) acc.open = false;
     });
 
     const wizard = detailsElement.querySelector('.step-wizard');
-    if (wizard) {
-        resetWizard(wizard.id);
-    }
-}
-
-function highlightHotspot(id) {
-    clearHighlights();
-    const element = document.getElementById(id);
-    if (element) element.classList.add('highlight-active');
+    if (wizard) resetWizard(wizard.id);
 }
 
 function clearHighlights() {
     const hotspots = document.querySelectorAll('.hotspot');
-    hotspots.forEach(hotspot => {
-        hotspot.classList.remove('highlight-active');
-    });
+    hotspots.forEach(hotspot => hotspot.classList.remove('highlight-active'));
 }
 
 function openModal(modalId) {
@@ -232,6 +174,23 @@ function closeModal(modalId) {
     if (modal) {
         modal.style.display = "none";
         document.body.style.overflow = "auto";
+    }
+}
+
+/* Interactieve Plattegrond Modals */
+function showMapInfo(title, description) {
+    const modal = document.getElementById('map-info-modal');
+    if (!modal) return;
+    
+    document.getElementById('map-info-title').innerText = title;
+    document.getElementById('map-info-desc').innerHTML = description; 
+    
+    modal.classList.add('show');
+}
+
+function closeMapInfo(event, forceClose = false) {
+    if (forceClose || event.target.id === 'map-info-modal') {
+        document.getElementById('map-info-modal').classList.remove('show');
     }
 }
 
