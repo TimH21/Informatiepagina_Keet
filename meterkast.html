@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Meterkast - Keet Wûns</title>
-    <link rel="stylesheet" href="style.css?">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- MODERNE HEADER -->
     <header class="app-header">
         <div class="header-content">
             <h1>METERKAST <span>Technisch Beheer</span></h1>
@@ -18,7 +17,6 @@
         </div>
     </header>
 
-    <!-- STICKY METERKAST PANEEL -->
     <div class="sticky-visual-container">
         <div class="visual-toggle" onclick="toggleVisual()">
             <span class="toggle-text">📸 Bekijk Meterkast Schema</span>
@@ -47,17 +45,15 @@
         </div>
     </div>
 
-    <!-- HOOFD CONTENT GEBIED -->
     <main class="app-main">
         
-        <!-- TAB 1: STORINGEN & DIAGNOSE -->
         <section id="tab-storing" class="tab-content active">
             <h2 class="section-title">Stroomstoring Oplossen</h2>
             
             <div class="card-list">
                 
                 <details class="modern-card border-warning" ontoggle="handleAccordionToggle(this)">
-                    <summary><span class="card-icon">⚡</span> Kortsluiting & Traject (🔒)</summary>
+                    <summary><span class="card-icon">⚡</span> Kortsluiting (Trajectcontrole)</summary>
                     <div class="card-body">
                         <div class="warning-box" style="margin-bottom: 15px;">⚠️ <strong>Let op:</strong> Bij meerdere aardlekken in serie kan de stroom overal op het terrein uitvallen. Volg dit plan lineair af!</div>
                         
@@ -80,10 +76,8 @@
                             <div class="wizard-step" data-highlight="hw-main,hw-aardlek-links,hw-aardlek-rechts">
                                 <span class="step-badge">Stap 4/8</span>
                                 <h3>[KEET] Evaluatie</h3>
-                                <p>Slaat de aardlek direct door? Dan zit het intern (trek stekkers uit). Staan alle hendels omhoog maar is er <strong>GEEN stroom</strong>? Klik op 'Volgende' om het terrein op te gaan.</p>
+                                <p>Slaat de aardlek direct door? Dan zit het intern (trek stekkers uit). Staan alle hendels omhoog maar is er <strong>GEEN stroom</strong>? Klik op 'Volgende'.</p>
                             </div>
-                            
-                            <!-- BEVEILIGDE EXTERNE STAPPEN -->
                             <div class="wizard-step" data-highlight="hw-main">
                                 <span class="step-badge danger">Stap 5/8 (🔒)</span>
                                 <h3>[TERREIN] Check Paddenstoel (Tent)</h3>
@@ -124,33 +118,27 @@
             </div>
         </section>
 
-        <!-- TAB 2: REPARATIE & ASSISTENT -->
         <section id="tab-werk" class="tab-content">
             
             <div class="selector-card">
                 <h3>🔍 Groepen & Foto Assistent</h3>
-                <p>Selecteer een stopcontact of apparaat. De meterkast toont direct een foto en geeft aan welke groep eraf moet:</p>
-                
+                <p>Selecteer een stopcontact of zone die je wilt repareren. De app toont direct welke groep je moet uitschakelen:</p>
                 <select id="appliance-select" onchange="findRequiredBreaker()">
-                    <option value="">-- Kies een apparaat / stopcontact --</option>
-                    <optgroup label="Groep 1: Grote Verwarming">
-                        <option value="kachel-3kw">3 kW Kachel</option>
+                    <option value="">-- Kies een locatie / stopcontact --</option>
+                    <optgroup label="Zone: Bar & Keukenblok (Links boven)">
+                        <option value="stopcontacten-bar">Stopcontacten rondom de barconstructie</option>
+                        <option value="stroom-koeling">Stroompunten hoofdkoelkast & barkoeling</option>
                     </optgroup>
-                    <optgroup label="Groep 2: Media & Keuken">
-                        <option value="televisie">Televisie & Laptop</option>
-                        <option value="wifi">WiFi Router</option>
-                        <option value="koelkasten">2 Koelkasten</option>
-                        <option value="kachel-2kw">2 kW Kachel</option>
+                    <optgroup label="Zone: Houten Muur & Mediahoek (Links onder)">
+                        <option value="stopcontacten-muur-links">Stopcontacten op de linker houten muur</option>
+                        <option value="stroom-mediahoek">Stopcontacten TV / Mediahoek</option>
                     </optgroup>
-                    <optgroup label="Groep 3: Buiten">
-                        <option value="buitenlicht">Buitenverlichting / Stroom</option>
-                        <option value="frituurpan">Frituurpan</option>
+                    <optgroup label="Zone: Plafond & Lichtlijnen (Rechts boven)">
+                        <option value="stroompunten-plafond">Plafond stroompunten (LED & Effecten)</option>
                     </optgroup>
-                    <optgroup label="Groep 4: Feest & Effecten">
-                        <option value="muziekbox">Muziekbox (Fenton)</option>
-                        <option value="ledstrips">LED-strips & Partylichten</option>
-                        <option value="discobol">Discobol & Noodverlichting</option>
-                        <option value="rookmachine">Rookmachine</option>
+                    <optgroup label="Zone: Verwarming & Exterieur (Rechts onder)">
+                        <option value="stroom-kachels">Aansluitingen kachels / Verwarming</option>
+                        <option value="stroom-buiten">Buitenverlichting stopcontacten</option>
                     </optgroup>
                 </select>
 
@@ -190,9 +178,7 @@
 
     </main>
 
-    <!-- BOTTOM APP NAVIGATION (NATIVE FEEL) -->
     <nav class="bottom-app-nav">
-        <!-- Deze knop navigeert je fysiek terug naar de hoofdpagina -->
         <a href="index.html" class="nav-item" style="text-decoration: none;">
             <span class="nav-icon">🏠</span>
             <span class="nav-text">Keet Hub</span>
@@ -207,17 +193,14 @@
         </button>
     </nav>
 
-    <!-- POP-UP MODALS VOOR HANDMATIGE KLIK OP SCHEMA -->
     <div id="modal_main" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_main')">&times;</span><h2 class="text-green">🟢 Hoofdschakelaar</h2><p><strong>Doel:</strong> Afsluiten van stroomvoorziening van en naar de keet. <br><strong>LET OP:</strong> Schakelt direct ALLE stroomgroepen tegelijk uit.</p></div></div>
-    
     <div id="modal_aardlek_links" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_aardlek_links')">&times;</span><h2 class="text-red">🔴 Aardlekschakelaar L</h2><p>Beveiligde groepen: Groep 1 en Groep 2.</p><p>Bij kortsluiting ter bescherming van een schok.</p></div></div>
     <div id="modal_aardlek_rechts" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_aardlek_rechts')">&times;</span><h2 class="text-red">🔴 Aardlekschakelaar R</h2><p>Beveiligde groepen: Groep 3 en Groep 4.</p><p>Bij kortsluiting ter bescherming van een schok.</p></div></div>
-    
-    <div id="modal_groep1" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep1')">&times;</span><h2 class="text-blue">🔵 Groep 1</h2><p>Gekoppeld aan: 3 kW Kachel.</p></div></div>
-    <div id="modal_groep2" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep2')">&times;</span><h2 class="text-blue">🔵 Groep 2</h2><p>Gekoppeld aan: Televisie, Laptop, WiFi, 2kW Kachel, 2 Koelkasten.</p></div></div>
-    <div id="modal_groep3" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep3')">&times;</span><h2 class="text-blue">🔵 Groep 3</h2><p>Gekoppeld aan: Buitenstroom, Buitenverlichting, Frituurpan.</p></div></div>
-    <div id="modal_groep4" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep4')">&times;</span><h2 class="text-blue">🔵 Groep 4</h2><p>Gekoppeld aan: Muziekbox, LED-strips, Discobol, Noodverlichting, Partylichten, Rookmachine.</p></div></div>
+    <div id="modal_groep1" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep1')">&times;</span><h2 class="text-blue">🔵 Groep 1</h2><p>Barkoeling, stopcontacten barzijde, hoofdkoelkast, frituurpan.</p></div></div>
+    <div id="modal_groep2" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep2')">&times;</span><h2 class="text-blue">🔵 Groep 2</h2><p>Stopcontacten linkerzijde muur, koelkast 2, magnetron, TV.</p></div></div>
+    <div id="modal_groep3" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep3')">&times;</span><h2 class="text-blue">🔵 Groep 3</h2><p>Hoofdverlichting (LED), geluidsinstallatie, discobol, lichtbord, rookmachine.</p></div></div>
+    <div id="modal_groep4" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('modal_groep4')">&times;</span><h2 class="text-blue">🔵 Groep 4</h2><p>Kachels, buitenverlichting.</p></div></div>
 
-    <script src="script.js?"></script>
+    <script src="script.js"></script>
 </body>
 </html>
