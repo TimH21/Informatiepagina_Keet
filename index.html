@@ -25,17 +25,22 @@
             <ul class="contact-list">
                 <li><strong>Tim Hoekstra</strong> <span>Bel of stuur een bericht via Whatsapp of Snapchat</span></li>
                 <li><strong>Theun Hoekstra</strong> <span>Bel of stuur een bericht via Whatsapp of Snapchat</span></li>
-                <li class="emergency-contact"><strong>Bokke (Grondeigenaar)</strong> <span>Bellen bij nood!</span></li>
+                <li class="emergency-contact"><strong>Bokke (Grondeigenaar)</strong> <span>Alleen bellen bij hoge nood of stroomuitval!</span></li>
             </ul>
         </div>
 
+        <!-- TAB 1: APPARATEN -->
         <section id="tab-info" class="tab-content active">
             <h2 class="section-title">Belangrijkste Apparaten</h2>
             <div class="card-list">
                 
-                <details class="modern-card highlight-green" open>
-                    <summary><span class="card-icon">💡</span> Hoofdverlichting & LED-strips</summary>
+                <details class="modern-card highlight-green" id="card-licht" open ontoggle="handleAccordionToggle(this)">
+                    <summary>
+                        <div class="summary-content"><span class="card-icon">💡</span> Hoofdverlichting & LED-strips</div>
+                        <span class="chevron-icon">▼</span>
+                    </summary>
                     <div class="card-body">
+                        <button class="action-link-btn" onclick="goToMapAndHighlight('hotspot-licht-remote')">📍 Toon op plattegrond</button>
                         <div class="step-wizard" id="wiz-licht">
                             <div class="wizard-step active">
                                 <span class="step-badge">Stap 1/2</span>
@@ -52,9 +57,13 @@
                     </div>
                 </details>
 
-                <details class="modern-card highlight-green">
-                    <summary><span class="card-icon">🔥</span> Kachels / Verwarming</summary>
+                <details class="modern-card highlight-green" id="card-kachels" ontoggle="handleAccordionToggle(this)">
+                    <summary>
+                        <div class="summary-content"><span class="card-icon">🔥</span> Kachels / Verwarming</div>
+                        <span class="chevron-icon">▼</span>
+                    </summary>
                     <div class="card-body">
+                        <button class="action-link-btn" onclick="goToMapAndHighlight('hotspot-kachel1')">📍 Toon op plattegrond</button>
                         <div class="step-wizard" id="wiz-kachels">
                             <div class="wizard-step active">
                                 <span class="step-badge danger">CRUCIAAL (Pre-Check)</span>
@@ -76,9 +85,13 @@
                     </div>
                 </details>
 
-                <details class="modern-card highlight-green">
-                    <summary><span class="card-icon">📺</span> Televisie & Firestick</summary>
+                <details class="modern-card highlight-green" id="card-tv" ontoggle="handleAccordionToggle(this)">
+                    <summary>
+                        <div class="summary-content"><span class="card-icon">📺</span> Televisie & Firestick</div>
+                        <span class="chevron-icon">▼</span>
+                    </summary>
                     <div class="card-body">
+                        <button class="action-link-btn" onclick="goToMapAndHighlight('hotspot-tv')">📍 Toon op plattegrond</button>
                         <div class="step-wizard" id="wiz-tv">
                             <div class="wizard-step active">
                                 <span class="step-badge">Stap 1/3</span>
@@ -100,9 +113,13 @@
                     </div>
                 </details>
 
-                <details class="modern-card highlight-green">
-                    <summary><span class="card-icon">🔊</span> Muziekboxen ('Fenton')</summary>
+                <details class="modern-card highlight-green" id="card-boxen" ontoggle="handleAccordionToggle(this)">
+                    <summary>
+                        <div class="summary-content"><span class="card-icon">🔊</span> Muziekboxen ('Fenton')</div>
+                        <span class="chevron-icon">▼</span>
+                    </summary>
                     <div class="card-body">
+                        <button class="action-link-btn" onclick="goToMapAndHighlight('hotspot-fenton')">📍 Toon op plattegrond</button>
                         <div class="step-wizard" id="wiz-boxen">
                             <div class="wizard-step active">
                                 <span class="step-badge">Stap 1/3</span>
@@ -126,9 +143,13 @@
 
                 <h2 class="section-title" style="margin-top:25px;">Overige Handleidingen</h2>
 
-                <details class="modern-card">
-                    <summary><span class="card-icon">💻</span> Laptop & Media</summary>
+                <details class="modern-card" id="card-laptop" ontoggle="handleAccordionToggle(this)">
+                    <summary>
+                        <div class="summary-content"><span class="card-icon">💻</span> Laptop & Media</div>
+                        <span class="chevron-icon">▼</span>
+                    </summary>
                     <div class="card-body">
+                        <button class="action-link-btn" onclick="goToMapAndHighlight('hotspot-laptop')">📍 Toon op plattegrond</button>
                         <div class="step-wizard" id="wiz-laptop">
                             <div class="wizard-step active">
                                 <span class="step-badge">Stap 1/4</span>
@@ -155,9 +176,13 @@
                     </div>
                 </details>
 
-                <details class="modern-card">
-                    <summary><span class="card-icon">🪩</span> Discobol & Lichtbord</summary>
+                <details class="modern-card" id="card-party" ontoggle="handleAccordionToggle(this)">
+                    <summary>
+                        <div class="summary-content"><span class="card-icon">🪩</span> Discobol & Lichtbord</div>
+                        <span class="chevron-icon">▼</span>
+                    </summary>
                     <div class="card-body">
+                        <button class="action-link-btn" onclick="goToMapAndHighlight('hotspot-partyknop')">📍 Toon op plattegrond</button>
                         <div class="step-wizard" id="wiz-party">
                             <div class="wizard-step active">
                                 <span class="step-badge danger">AFBLIJVEN</span>
@@ -179,9 +204,13 @@
                     </div>
                 </details>
 
-                <details class="modern-card">
-                    <summary><span class="card-icon">🍟</span> Frituurpan</summary>
+                <details class="modern-card" id="card-frituur" ontoggle="handleAccordionToggle(this)">
+                    <summary>
+                        <div class="summary-content"><span class="card-icon">🍟</span> Frituurpan</div>
+                        <span class="chevron-icon">▼</span>
+                    </summary>
                     <div class="card-body">
+                        <button class="action-link-btn" onclick="goToMapAndHighlight('hotspot-frituur')">📍 Toon op plattegrond</button>
                         <div class="step-wizard" id="wiz-frituur">
                             <div class="wizard-step active">
                                 <span class="step-badge danger">PRE-CHECK</span>
@@ -203,9 +232,13 @@
                     </div>
                 </details>
 
-                <details class="modern-card">
-                    <summary><span class="card-icon">💨</span> Rookmachine</summary>
+                <details class="modern-card" id="card-rook" ontoggle="handleAccordionToggle(this)">
+                    <summary>
+                        <div class="summary-content"><span class="card-icon">💨</span> Rookmachine</div>
+                        <span class="chevron-icon">▼</span>
+                    </summary>
                     <div class="card-body">
+                        <button class="action-link-btn" onclick="goToMapAndHighlight('hotspot-rookmachine')">📍 Toon op plattegrond</button>
                         <div class="step-wizard" id="wiz-rook">
                             <div class="wizard-step active">
                                 <span class="step-badge danger">PRE-CHECK</span>
@@ -220,15 +253,18 @@
                             <div class="wizard-step">
                                 <span class="step-badge">Stap 3/3</span>
                                 <h3>Afstandsbediening</h3>
-                                <p>Druk op de kleine afstandsbediening achter de bar op <strong>'a'</strong> om te roken. Handmatig stoppen doe je met <strong>'b'</strong>. De knoppen 'c' en 'd' hebben geen functie. Trek na gebruik de stekker eruit.</p>
+                                <p>Druk op de kleine afstandsbediening achter de bar op <strong>'a'</strong> om te roken. Handmatig stoppen doe je met <strong>'b'</strong>. Trek na gebruik de stekker eruit.</p>
                             </div>
                             <div class="wizard-nav"><button class="btn-prev" onclick="navigateWizard('wiz-rook', -1)" disabled>Vorige</button><button class="btn-next" onclick="navigateWizard('wiz-rook', 1)">Volgende</button></div>
                         </div>
                     </div>
                 </details>
 
-                <details class="modern-card">
-                    <summary><span class="card-icon">🌙</span> Verlichting Buiten</summary>
+                <details class="modern-card" id="card-buiten" ontoggle="handleAccordionToggle(this)">
+                    <summary>
+                        <div class="summary-content"><span class="card-icon">🌙</span> Verlichting Buiten</div>
+                        <span class="chevron-icon">▼</span>
+                    </summary>
                     <div class="card-body">
                         <div class="step-wizard" id="wiz-buiten">
                             <div class="wizard-step active">
@@ -246,14 +282,18 @@
                     </div>
                 </details>
 
-                <details class="modern-card">
-                    <summary><span class="card-icon">🚽</span> Toilet & WC Voorschriften</summary>
+                <details class="modern-card" id="card-wc" ontoggle="handleAccordionToggle(this)">
+                    <summary>
+                        <div class="summary-content"><span class="card-icon">🚽</span> Toilet & WC Voorschriften</div>
+                        <span class="chevron-icon">▼</span>
+                    </summary>
                     <div class="card-body">
+                        <button class="action-link-btn" onclick="goToMapAndHighlight('hotspot-wc')">📍 Toon op plattegrond</button>
                         <div class="step-wizard" id="wiz-wc">
                             <div class="wizard-step active">
                                 <span class="step-badge danger">VERSTOPPING</span>
                                 <h3>Voorkom verstoppingen</h3>
-                                <p class="danger-box">Spoel NOOIT dingen zoals wc-papier of menstruatieproducten door de wc. De boel raakt dan verstopt.</p>
+                                <p class="danger-box">Spoel NOOIT dingen zoals wc-papier, handdoekjes of tampons door de afvoer. De boel raakt direct verstopt.</p>
                             </div>
                             <div class="wizard-step">
                                 <span class="step-badge">Stap 2/3</span>
@@ -272,20 +312,20 @@
             </div>
         </section>
 
-        <!-- TAB 2: PLATTEGROND (Nieuwe Blueprint Stijl) -->
+        <!-- TAB 2: PLATTEGROND -->
         <section id="tab-map" class="tab-content">
             <h2 class="section-title">📍 Indeling van de Keet</h2>
             
             <div class="contact-card" style="background: var(--card-bg); border-color: var(--border-color); padding: 15px; margin-bottom: 50px;">
                 <h3 style="margin-top:0; color: var(--neon-green);">Digitale Plattegrond</h3>
                 <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">
-                    Klik op een icoon op de plattegrond om te zien wat het is en op welke stroomgroep hij zit.
+                    Klik op een icoon op de plattegrond om te zien wat het is, óf ga direct naar de handleiding van het apparaat.
                 </p>
 
                 <div class="keet-map-wrapper">
                     <!-- Externe elementen (WC & Frituurpan) -->
-                    <div class="map-external ext-toilet" onclick="showMapInfo('Toilet (Buiten)', 'Grijze cabine. Draai de zwarte kraan open om bij te vullen als de bak leeg is.')">🚽</div>
-                    <div class="map-external ext-frituur" onclick="showMapInfo('Frituurpan', 'Staat buiten op <strong>Groep 3</strong>. ⚠️ NOOIT aanzetten tegelijk met de kachels of rookmachine!')">🍟</div>
+                    <div id="hotspot-wc" class="map-external ext-toilet" onclick="showMapInfo(this, 'Toilet (Buiten)', 'Grijze cabine. Draai de zwarte kraan open om bij te vullen als de bak leeg is.', 'card-wc')">🚽</div>
+                    <div id="hotspot-frituur" class="map-external ext-frituur" onclick="showMapInfo(this, 'Frituurpan', 'Staat buiten op <strong>Groep 3</strong>. ⚠️ NOOIT aanzetten tegelijk met de kachels of rookmachine!', 'card-frituur')">🍟</div>
 
                     <div class="keet-map-container">
                         
@@ -306,32 +346,32 @@
                         <div class="map-door-text">Uitgang</div>
 
                         <!-- Apparatuur & Geluid -->
-                        <div class="map-item fenton-box" style="top: 4%; left: 4%;" onclick="showMapInfo('Fenton Hoofdbox', 'Grote speaker (Groep 4). Verbind via Bluetooth met de naam \'Fenton\'.')"></div>
-                        <div class="map-item fenton-box" style="bottom: 4%; left: 4%;" onclick="showMapInfo('Fenton Box 2', 'Tweede speaker (Groep 4).')"></div>
+                        <div id="hotspot-fenton" class="map-item fenton-box" style="top: 4%; left: 4%;" onclick="showMapInfo(this, 'Fenton Hoofdbox', 'Grote speaker (Groep 4). Verbind via Bluetooth met de naam \'Fenton\'.', 'card-boxen')"></div>
+                        <div class="map-item fenton-box" style="bottom: 4%; left: 4%;" onclick="showMapInfo(this, 'Fenton Box 2', 'Tweede speaker (Groep 4).', 'card-boxen')"></div>
                         
-                        <div class="map-item rookmachine" style="bottom: 3%; left: 12%;" onclick="showMapInfo('Rookmachine', 'Zit op Groep 4. ⚠️ Check altijd of er vloeistof in zit! Niet tegelijk met de kachels aanzetten.')"></div>
+                        <div id="hotspot-rookmachine" class="map-item rookmachine" style="bottom: 3%; left: 12%;" onclick="showMapInfo(this, 'Rookmachine', 'Zit op Groep 4. ⚠️ Check altijd of er vloeistof in zit! Niet tegelijk met de kachels aanzetten.', 'card-rook')"></div>
                         
-                        <div class="map-item kachel-vert" style="top: 15%; left: 3%;" onclick="showMapInfo('Grote Kachel (3kW)', 'Verwarming op Groep 1. Vergeet hem niet uit te zetten als je weggaat!')"></div>
-                        <div class="map-item kachel-horz" style="bottom: 2%; left: 45%;" onclick="showMapInfo('Kleine Kachel (2kW)', 'Verwarming op Groep 2. Vergeet hem niet uit te zetten!')"></div>
+                        <div id="hotspot-kachel1" class="map-item kachel-vert" style="top: 15%; left: 3%;" onclick="showMapInfo(this, 'Grote Kachel (3kW)', 'Verwarming op Groep 1. Vergeet hem niet uit te zetten als je weggaat!', 'card-kachels')"></div>
+                        <div class="map-item kachel-horz" style="bottom: 2%; left: 45%;" onclick="showMapInfo(this, 'Kleine Kachel (2kW)', 'Verwarming op Groep 2. Vergeet hem niet uit te zetten!', 'card-kachels')"></div>
                         
-                        <div class="map-item party-knop" style="top: 41%; left: 4%;" onclick="showMapInfo('Party Knop', 'Voor de discobol en het lichtbord. ⚠️ Schuif altijd de asbak weer over de knop als je hem hebt ingedrukt!')">💡</div>
-                        <div class="map-item meterkast" style="top: 52%; left: 2%;" onclick="showMapInfo('Meterkast', 'Stroom en schakelaars. Scan de NFC-tag in de meterkast zelf bij stroomuitval.')"></div>
+                        <div id="hotspot-partyknop" class="map-item party-knop" style="top: 41%; left: 4%;" onclick="showMapInfo(this, 'Party Knop', 'Voor de discobol en het lichtbord. ⚠️ Schuif altijd de asbak weer over de knop als je hem hebt ingedrukt!', 'card-party')">💡</div>
+                        <div class="map-item meterkast" style="top: 52%; left: 2%;" onclick="showMapInfo(this, 'Meterkast', 'Stroom en schakelaars. Scan de NFC-tag in de meterkast zelf bij stroomuitval.')"></div>
                         
-                        <div class="map-item discobol" style="top: 60%; left: 50%;" onclick="showMapInfo('Discobol & Noodlicht', 'Draait op Groep 4. Ook de noodverlichting zit op dit stopcontact!')"></div>
+                        <div class="map-item discobol" style="top: 60%; left: 50%;" onclick="showMapInfo(this, 'Discobol & Noodlicht', 'Draait op Groep 4. Ook de noodverlichting zit op dit stopcontact!', 'card-party')"></div>
                         
                         <!-- Op en rond de Bar -->
-                        <div class="map-item licht-remote" style="top: 15%; left: 60%; transform: translate(-50%, -50%);" onclick="showMapInfo('Afstandsbediening', 'Licht en LED-strips aanzetten (Groep 4). Witte knop = AAN, Rode knop = UIT.')"></div>
-                        <div class="map-item kleine-koelkast" style="top: 22%; left: 60%; transform: translateX(-50%);" onclick="showMapInfo('Kleine Koelkast', 'Extra koelkast. Aangesloten op Groep 2.')"></div>
+                        <div id="hotspot-licht-remote" class="map-item licht-remote" style="top: 15%; left: 60%; transform: translate(-50%, -50%);" onclick="showMapInfo(this, 'Afstandsbediening', 'Licht en LED-strips aanzetten (Groep 4). Witte knop = AAN, Rode knop = UIT.', 'card-licht')"></div>
+                        <div class="map-item kleine-koelkast" style="top: 22%; left: 60%; transform: translateX(-50%);" onclick="showMapInfo(this, 'Kleine Koelkast', 'Extra koelkast. Aangesloten op Groep 2.')"></div>
                         
-                        <div class="map-item laptop" style="top: 5%; left: 65%;" onclick="showMapInfo('Laptop & WiFi', 'Aangesloten op Groep 2. Wachtwoord laptop is 1122. Gebruik altijd het grote scherm.')"></div>
-                        <div class="map-item grote-koelkast" style="top: 4%; right: 6%;" onclick="showMapInfo('Grote Koelkast', 'De hoofdkoeling voor het bier. Aangesloten op Groep 1.')"></div>
-                        <div class="map-item tv" style="top: 2%; right: -2%; transform: rotate(30deg);" onclick="showMapInfo('Televisie', 'Staat op Groep 2. ⚠️ Haal na gebruik ALTIJD de USB-stekker van de Firestick uit het blokje!')"></div>
+                        <div id="hotspot-laptop" class="map-item laptop" style="top: 5%; left: 65%;" onclick="showMapInfo(this, 'Laptop & WiFi', 'Aangesloten op Groep 2. Wachtwoord laptop is 1122. Gebruik altijd het grote scherm.', 'card-laptop')"></div>
+                        <div class="map-item grote-koelkast" style="top: 4%; right: 6%;" onclick="showMapInfo(this, 'Grote Koelkast', 'De hoofdkoeling voor het bier. Aangesloten op Groep 1.')"></div>
+                        <div id="hotspot-tv" class="map-item tv" style="top: 2%; right: -2%; transform: rotate(30deg);" onclick="showMapInfo(this, 'Televisie', 'Staat op Groep 2. ⚠️ Haal na gebruik ALTIJD de USB-stekker van de Firestick uit het blokje!', 'card-tv')"></div>
                         
                         <!-- Veiligheid -->
-                        <div class="map-item blusser" style="top: 5%; left: 72%;" onclick="showMapInfo('Schuimblusser', 'Schuimblusser (5L). ⚠️ Mag voor bijna alles gebruikt worden, ook elektriciteit. NIET gebruiken op een brandende frituurpan.')"></div>
-                        <div class="map-item blusser" style="top: 22%; right: 4%;" onclick="showMapInfo('Poederblusser', 'Poederblusser (1kg). ⚠️ Poeder maakt wel heel veel troep en apparaten stuk. Gebruik liever de schuimblusser als het even kan.')"></div>
+                        <div class="map-item blusser" style="top: 5%; left: 72%;" onclick="showMapInfo(this, 'Schuimblusser', 'Schuimblusser (5L). ⚠️ Mag voor bijna alles gebruikt worden, ook elektriciteit. NIET gebruiken op een brandende frituurpan.')"></div>
+                        <div class="map-item blusser" style="top: 22%; right: 4%;" onclick="showMapInfo(this, 'Poederblusser', 'Poederblusser (1kg). ⚠️ Poeder maakt wel heel veel troep en apparaten stuk. Gebruik liever de schuimblusser als het even kan.')"></div>
                         
-                        <div class="map-triangle ehbo" style="top: 9%; right: 9%;" onclick="showMapInfo('EHBO Trommel', 'Voor pleisters en snelverband. Bij diepe snijwonden door glas: druk erop houden en arm omhoog!')">
+                        <div class="map-triangle ehbo" style="top: 9%; right: 9%;" onclick="showMapInfo(this, 'EHBO Trommel', 'Voor pleisters en snelverband. Bij diepe snijwonden door glas: druk erop houden en arm omhoog!')">
                             <span class="cross">➕</span>
                         </div>
                     </div>
@@ -342,21 +382,23 @@
 
     </main>
 
+    <!-- INTERACTIEVE MAP POP-UP MODAL (ZWEVEND ONDERIN) -->
     <div id="map-info-modal" class="map-popup-overlay" onclick="closeMapInfo(event)">
         <div class="map-popup-content">
             <h3 id="map-info-title">Apparaat Naam</h3>
-            <p id="map-info-desc">Beschrijving komt hier.</p>
+            <p id="map-info-desc">Hier komt de interactieve beschrijving van het aangeklikte element.</p>
+            <button id="map-manual-btn" class="map-popup-btn primary hidden" onclick="goToManual()">📖 Bekijk Handleiding</button>
             <button class="map-popup-btn" onclick="closeMapInfo(event, true)">Begrepen</button>
         </div>
     </div>
 
-    <!-- APP NAVIGATIE -->
+    <!-- MOBIELE BOTTOM APP NAVIGATION -->
     <nav class="bottom-app-nav">
-        <button class="nav-item active" onclick="switchTab(event, 'tab-info')">
+        <button class="nav-item active" data-target="tab-info" onclick="switchTab(event, 'tab-info')">
             <span class="nav-icon">📋</span>
             <span class="nav-text">Apparaten</span>
         </button>
-        <button class="nav-item" onclick="switchTab(event, 'tab-map')">
+        <button class="nav-item" data-target="tab-map" onclick="switchTab(event, 'tab-map')">
             <span class="nav-icon">📍</span>
             <span class="nav-text">Plattegrond</span>
         </button>
