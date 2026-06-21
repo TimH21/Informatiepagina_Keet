@@ -98,7 +98,6 @@ body {
 .btn-prev:hover:not(:disabled) { background: #282f3d; }
 .btn-next:hover:not(:disabled) { background: #166534; }
 .btn-prev:disabled, .btn-next:disabled { opacity: 0.25; cursor: not-allowed; }
-.inline-action-btn { background: #1f1f22; border: 1px solid var(--group-blue); color: var(--group-blue); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; margin-top: 8px; }
 
 /* METERKAST HUB AFBEELDING SPECIFIEK */
 .static-visual-container { background: var(--bg-color); border-bottom: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
@@ -122,9 +121,8 @@ body {
 .selector-result-box { margin-top: 15px; padding: 15px; background: rgba(34, 197, 94, 0.04); border-radius: 12px; border: 1px solid rgba(34, 197, 94, 0.15); }
 .selector-result-box.hidden { display: none; }
 .selector-img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; }
-.unlock-btn { width: 100%; padding: 12px; background: #222225; border: 1px solid #3f3f46; color: #fff; font-weight: 600; border-radius: 8px; cursor: pointer; margin-top: 15px; }
 
-/* APP NAVIGATION BOTTOM (3 knoppen) */
+/* APP NAVIGATION BOTTOM */
 .bottom-app-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 72px; background: rgba(7, 26, 14, 0.96); backdrop-filter: blur(20px); border-top: 1px solid rgba(34, 197, 94, 0.25); display: flex; justify-content: center; gap: 12%; align-items: center; z-index: 1000; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -5px 25px rgba(0,0,0,0.6); }
 .nav-item { background: none; border: none; color: #52525b; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 16px; cursor: pointer; transition: var(--transition); outline: none; text-decoration: none; }
 .nav-icon { font-size: 20px; filter: grayscale(100%) opacity(0.5); transition: var(--transition); }
@@ -137,111 +135,119 @@ body {
 .modal-content { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 25px; width: 90%; max-width: 400px; margin: 40% auto; position: relative; box-shadow: var(--shadow); }
 .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; color: var(--text-muted); cursor: pointer; }
 
-
-/* --- EXACTE DIGITALE PLATTEGROND (VOLGENS SCHETS) --- */
+/* --- VERNIEUWDE 3D BLUEPRINT PLATTEGROND --- */
 .keet-map-wrapper {
     position: relative;
     width: 100%;
-    padding: 40px 0 20px 40px; /* Ruimte voor frituur en toilet erbuiten */
+    padding: 40px 0 20px 40px; 
     margin-top: 10px;
 }
 
+/* Blauwdruk Raster Achtergrond */
 .keet-map-container {
     position: relative;
     width: 100%;
     aspect-ratio: 5 / 8;
-    background: #09090b;
-    border: 3px solid #f8fafc; 
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+    background: linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px), #090e17;
+    background-size: 20px 20px;
+    border: 4px solid #1e293b; 
+    border-radius: 8px;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.9), 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* Externe Elementen buiten de plattegrond */
+/* Externe Elementen met diepte */
 .ext-toilet {
     top: 5px; left: 20%; 
     width: 25%; height: 35px;
-    background: #d1d5db; 
-    border: 3px solid #000;
+    background: linear-gradient(145deg, #9ca3af, #6b7280); 
+    border: 2px solid #4b5563;
     border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.4);
     z-index: 5;
     display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer;
 }
 .ext-frituur {
     top: 35%; left: 5px; 
     width: 35px; height: 25px;
-    background: #bfdbfe; 
-    border-radius: 4px;
-    border: 1px solid #3b82f6;
+    background: linear-gradient(145deg, #3b82f6, #1d4ed8);
+    border-radius: 6px;
+    border: 2px solid #60a5fa;
+    box-shadow: -4px 0 10px rgba(0,0,0,0.4);
     font-size: 14px;
     z-index: 5;
     display: flex; align-items: center; justify-content: center; cursor: pointer;
 }
 
-/* De muren van het Bar-eiland */
-.bar-wall { position: absolute; background: #f8fafc; z-index: 5; box-shadow: 0 0 5px rgba(255,255,255,0.2); }
-.bar-wall-1 { top: 0; left: 38%; width: 2px; height: 45%; }
-.bar-wall-2 { top: 45%; left: 38%; width: 22%; height: 2px; }
-.bar-wall-3 { top: 35%; left: 60%; width: 2px; height: 10%; }
-.bar-wall-4 { top: 35%; left: 60%; width: 15%; height: 2px; }
-.bar-wall-5 { top: 25%; left: 75%; width: 2px; height: 10%; }
-.bar-wall-6 { top: 25%; left: 60%; width: 15%; height: 2px; }
-.bar-wall-7 { top: 0; left: 60%; width: 2px; height: 25%; }
+/* De muren van het Bar-eiland (3D effect) */
+.bar-wall { position: absolute; background: linear-gradient(90deg, #94a3b8, #e2e8f0, #94a3b8); z-index: 5; box-shadow: 2px 2px 6px rgba(0,0,0,0.6); }
+.bar-wall-1 { top: 0; left: 38%; width: 3px; height: 45%; }
+.bar-wall-2 { top: 45%; left: 38%; width: 22%; height: 3px; }
+.bar-wall-3 { top: 35%; left: 60%; width: 3px; height: 10%; }
+.bar-wall-4 { top: 35%; left: 60%; width: 15%; height: 3px; }
+.bar-wall-5 { top: 25%; left: 75%; width: 3px; height: 10%; }
+.bar-wall-6 { top: 25%; left: 60%; width: 15%; height: 3px; }
+.bar-wall-7 { top: 0; left: 60%; width: 3px; height: 25%; }
 
 .bar-text-overlay {
     position: absolute;
     top: 22%; left: 49%;
     transform: translate(-50%, -50%) rotate(45deg);
-    color: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.1);
     font-size: 28px; font-weight: 900;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
     z-index: 1;
 }
 
-/* Blauwe ramen */
-.map-window { position: absolute; width: 6px; height: 12%; left: -4px; background: #6366f1; border-radius: 4px; }
+/* Ramen gloed */
+.map-window { position: absolute; width: 6px; height: 12%; left: -4px; background: #38bdf8; box-shadow: 0 0 10px #38bdf8; border-radius: 4px; }
 .window-top { top: 15%; }
 .window-bottom { bottom: 15%; }
 
-/* Klapdeur en tekst */
+/* Klapdeur */
 .map-door-line {
     position: absolute;
     top: 40%; left: -20px;
     width: 22px; height: 2px;
-    background: #fff;
+    background: #cbd5e1;
     transform: rotate(45deg);
     transform-origin: right top;
 }
 .map-door-text {
     position: absolute;
     top: 43%; left: 4px;
-    color: #fff; font-size: 9px;
+    color: #cbd5e1; font-size: 9px; font-weight: 600;
     transform: rotate(-90deg);
 }
 
-/* Apparatuur Iconen */
+/* Apparatuur Iconen met 3D Styling */
 .map-item {
     position: absolute;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     z-index: 10; font-size: 12px;
-    transition: transform 0.2s ease;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.map-item:active { transform: scale(1.2); }
+.map-item:active { transform: scale(1.2); box-shadow: 0 0 15px rgba(255,255,255,0.5); }
 
-.fenton-box { width: 25px; height: 25px; background: #4b5563; border-radius: 6px; transform: rotate(45deg); }
-.rookmachine { width: 18px; height: 22px; background: #1e3a8a; border-radius: 4px; }
-.kachel-vert { width: 12px; height: 40px; background: #bef264; border-radius: 6px; }
-.kachel-horz { width: 40px; height: 12px; background: #bef264; border-radius: 6px; }
-.party-knop { width: 22px; height: 22px; background: #06b6d4; border-radius: 50%; font-size: 14px; }
-.meterkast { width: 12px; height: 40px; background: #ef4444; border-radius: 4px; }
-.discobol { width: 30px; height: 30px; background: #d1d5db; border-radius: 50%; outline: 3px dashed #9ca3af; transform: translate(-50%, -50%); }
+.fenton-box { width: 25px; height: 25px; background: linear-gradient(145deg, #4b5563, #1f2937); border-radius: 6px; transform: rotate(45deg); }
+.rookmachine { width: 18px; height: 22px; background: linear-gradient(145deg, #3b82f6, #1e3a8a); border-radius: 4px; }
+.kachel-vert { width: 12px; height: 40px; background: linear-gradient(145deg, #f97316, #c2410c); border-radius: 6px; }
+.kachel-horz { width: 40px; height: 12px; background: linear-gradient(145deg, #f97316, #c2410c); border-radius: 6px; }
+.party-knop { width: 22px; height: 22px; background: radial-gradient(circle at 30% 30%, #22d3ee, #0891b2); border-radius: 50%; font-size: 14px; border: 2px solid #fff; }
+.meterkast { width: 12px; height: 40px; background: linear-gradient(145deg, #ef4444, #991b1b); border-radius: 4px; }
+.discobol { width: 30px; height: 30px; background: radial-gradient(circle at 30% 30%, #f3f4f6, #9ca3af); border-radius: 50%; border: 1px solid #6b7280; transform: translate(-50%, -50%); }
 
-.licht-remote { width: 18px; height: 18px; background: #fde047; border-radius: 50%; }
-.kleine-koelkast { width: 25px; height: 25px; background: #34d399; border-radius: 4px; }
-.laptop { width: 32px; height: 18px; background: #f472b6; border-radius: 4px; }
-.grote-koelkast { width: 32px; height: 32px; background: #10b981; border-radius: 6px; }
-.tv { width: 38px; height: 14px; background: #f97316; border-radius: 4px; }
+.licht-remote { width: 18px; height: 18px; background: radial-gradient(circle, #fef08a, #eab308); border-radius: 50%; }
+.kleine-koelkast { width: 25px; height: 25px; background: linear-gradient(145deg, #34d399, #059669); border-radius: 4px; }
+.laptop { width: 32px; height: 18px; background: linear-gradient(145deg, #c084fc, #db2777); border-radius: 4px; }
+.grote-koelkast { width: 32px; height: 32px; background: linear-gradient(145deg, #34d399, #059669); border-radius: 6px; }
+.tv { width: 38px; height: 14px; background: linear-gradient(145deg, #38bdf8, #1d4ed8); border-radius: 4px; }
 
-.blusser { width: 16px; height: 16px; background: #dc2626; transform: rotate(45deg); box-shadow: 0 0 10px rgba(220,38,38,0.5); }
-.map-triangle { position: absolute; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 18px solid #fef08a; cursor: pointer; z-index: 12; }
+.blusser { width: 16px; height: 16px; background: #dc2626; transform: rotate(45deg); box-shadow: 0 0 10px rgba(220,38,38,0.6); border: 1px solid #fca5a5; }
+.map-triangle { position: absolute; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 18px solid #fef08a; cursor: pointer; z-index: 12; filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.6)); }
 .map-triangle .cross { position: absolute; top: 4px; left: -4px; color: #ef4444; font-size: 8px; font-weight: bold; }
 
 /* INTERACTIEVE MAP POP-UP MODAL */
