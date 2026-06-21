@@ -12,46 +12,106 @@ const groepenMap = {
     "rookmachine": { hotspot: "hw-groep4", code: "Groep 4", img: "foto-rookmachine.jpg", info: "Zet <strong>Groep 4</strong> uit om de rookmachine veilig los te koppelen." }
 };
 
-function switchTab(event, tabId) {
+function openTab(tabId) {
     clearHighlights();
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabContents.forEach(content => content.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(btn => btn.classList.remove('active'));
+    const targetTab = document.getElementById(tabId);
+    if(targetTab) targetTab.classList.add('active');
     
-    if (document.getElementById(tabId)) {
-        document.getElementById(tabId).classList.add('active');
-        event.currentTarget.classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    const targetNav = document.querySelector(`.nav-item[data-target="${tabId}"]`);
+    if(targetNav) targetNav.classList.add('active');
+}
+
+function switchTab(event, tabId) {
+    if(event) event.preventDefault();
+    openTab(tabId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+let currentTargetManual = null;
+let activeMapElement = null;
+
+function goToManual() {
+    closeMapInfo(null, true);
+    if(currentTargetManual) {
+        openTab('tab-info');
+        const targetDetails = document.getElementById(currentTargetManual);
+        if(targetDetails) {
+            targetDetails.open = true;
+            handleAccordionToggle(targetDetails);
+            setTimeout(() => {
+                targetDetails.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                targetDetails.classList.add('card-highlight-pulse');
+                setTimeout(() => targetDetails.classList.remove('card-highlight-pulse'), 2000);
+            }, 300);
+        }
     }
 }
 
-function findRequiredBreaker() {
-    clearHighlights();
-    const select = document.getElementById('appliance-select');
-    const resultBox = document.getElementById('selector-result');
-    const resultText = document.getElementById('result-text');
-    const resultImg = document.getElementById('result-img');
+function goToMapAndHighlight(hotspotId) {
+    openTab('tab-map');
+    setTimeout(() => {
+        const hotspot = document.getElementById(hotspotId);
+        if(hotspot) {
+            hotspot.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            hotspot.click(); 
+        }
+    }, 300);
+}
+
+function showMapInfo(element, title, description, manualId = null) {
+    const modal = document.getElementById('map-info-modal');
+    if (!modal) return;
     
-    if (!select || !select.value || !groepenMap[select.value]) {
-        if(resultBox) resultBox.classList.add('hidden');
-        if(resultImg) resultImg.classList.add('hidden');
+    // Verwijder oude highlights en highlight de nieuwe
+    clearHighlights();
+    if (element) {
+        element.classList.add('highlight-pulse');
+        activeMapElement = element;
+    }
+    
+    document.getElementById('map-info-title').innerText = title;
+    document.getElementById('map-info-desc').innerHTML = description; 
+    
+    const manualBtn = document.getElementById('map-manual-btn');
+    if(manualId && manualBtn) {
+        currentTargetManual = manualId;
+        manualBtn.classList.remove('hidden');
+    } else if (manualBtn) {
+        manualBtn.classList.add('hidden');
+    }
+    
+    modal.classList.add('show');
+}
+
+function closeMapInfo(event, forceClose = false) {
+    if (forceClose || event.target.id === 'map-info-modal') {
+        document.getElementById('map-info-modal').classList.remove('show');
+        if (activeMapElement) {
+            activeMapElement.classList.remove('highlight-pulse');
+            activeMapElement = null;
+        }
+    }
+}
+
+function handleAccordionToggle(detailsElement) {
+    if (!detailsElement.open) {
+        clearHighlights();
         return;
     }
+    const allAccordions = document.querySelectorAll('.modern-card');
+    allAccordions.forEach(acc => {
+        if (acc !== detailsElement && acc.open) acc.open = false;
+    });
+
+    const wizard = detailsElement.querySelector('.step-wizard');
+    if (wizard) resetWizard(wizard.id);
     
-    const data = groepenMap[select.value];
-    if (data.img && resultImg) {
-        resultImg.src = data.img;
-        resultImg.classList.remove('hidden');
-    }
-    if(resultText) resultText.innerHTML = `<strong>Wat moet je doen:</strong> ${data.info}`;
-    if(resultBox) resultBox.classList.remove('hidden');
-    
-    const element = document.getElementById(data.hotspot);
-    if (element) {
-        element.classList.add('highlight-active');
-    }
+    setTimeout(() => {
+        detailsElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 150);
 }
 
 let isTrajectUnlocked = false;
@@ -77,8 +137,6 @@ function navigateWizard(wizardId, direction) {
         if (wizardId === 'wiz-kortsluiting-traject' && currentStepIndex === 3 && direction === 1) {
             if (!isTrajectUnlocked) {
                 let pw = prompt("🔒 BEVEILIGD: Om van de stroomkasten buiten af te blijven, is een wachtwoord nodig.\n\nWat is het wachtwoord?");
-                
-                // Het Wachtwoord!
                 if (pw === "niks") { 
                     isTrajectUnlocked = true; 
                 } else {
@@ -116,7 +174,6 @@ function resetWizard(wizardId) {
 
     const prevBtn = wizard.querySelector('.btn-prev');
     const nextBtn = wizard.querySelector('.btn-next');
-
     if (prevBtn) prevBtn.disabled = true;
     if (nextBtn) nextBtn.disabled = (steps.length <= 1);
 }
@@ -138,31 +195,47 @@ function applyStepHighlight(stepElement) {
     }
 }
 
-function handleAccordionToggle(detailsElement) {
-    const select = document.getElementById('appliance-select');
-    if (select) {
-        select.value = "";
-        const resBox = document.getElementById('selector-result');
-        if(resBox) resBox.classList.add('hidden');
-    }
-
-    if (!detailsElement.open) {
-        clearHighlights();
-        return;
-    }
-
-    const allAccordions = document.querySelectorAll('.modern-card');
-    allAccordions.forEach(acc => {
-        if (acc !== detailsElement && acc.open) acc.open = false;
-    });
-
-    const wizard = detailsElement.querySelector('.step-wizard');
-    if (wizard) resetWizard(wizard.id);
+function clearHighlights() {
+    const hotspots = document.querySelectorAll('.hotspot, .map-item, .map-external');
+    hotspots.forEach(hotspot => hotspot.classList.remove('highlight-active', 'highlight-pulse'));
 }
 
-function clearHighlights() {
-    const hotspots = document.querySelectorAll('.hotspot');
-    hotspots.forEach(hotspot => hotspot.classList.remove('highlight-active'));
+function findRequiredBreaker() {
+    clearHighlights();
+    const select = document.getElementById('appliance-select');
+    const resultBox = document.getElementById('selector-result');
+    const resultText = document.getElementById('result-text');
+    const resultImg = document.getElementById('result-img');
+    
+    if (!select || !select.value || !groepenMap[select.value]) {
+        if(resultBox) resultBox.classList.add('hidden');
+        if(resultImg) resultImg.classList.add('hidden');
+        return;
+    }
+    
+    const data = groepenMap[select.value];
+    if (data.img && resultImg) {
+        resultImg.src = data.img;
+        resultImg.classList.remove('hidden');
+    }
+    if(resultText) resultText.innerHTML = `<strong>Wat moet je doen:</strong> ${data.info}`;
+    if(resultBox) resultBox.classList.remove('hidden');
+    
+    const element = document.getElementById(data.hotspot);
+    if (element) element.classList.add('highlight-active');
+}
+
+function toggleVisual(forceOpen = false) {
+    const content = document.getElementById('visual-content');
+    const chevron = document.getElementById('visual-chevron');
+    if (!content) return;
+    if (content.classList.contains('hidden') || forceOpen === true) {
+        content.classList.remove('hidden');
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+    } else if (forceOpen !== true) {
+        content.classList.add('hidden');
+        if (chevron) chevron.style.transform = 'rotate(0deg)';
+    }
 }
 
 function openModal(modalId) {
@@ -178,23 +251,6 @@ function closeModal(modalId) {
     if (modal) {
         modal.style.display = "none";
         document.body.style.overflow = "auto";
-    }
-}
-
-/* Interactieve Plattegrond Modals */
-function showMapInfo(title, description) {
-    const modal = document.getElementById('map-info-modal');
-    if (!modal) return;
-    
-    document.getElementById('map-info-title').innerText = title;
-    document.getElementById('map-info-desc').innerHTML = description; 
-    
-    modal.classList.add('show');
-}
-
-function closeMapInfo(event, forceClose = false) {
-    if (forceClose || event.target.id === 'map-info-modal') {
-        document.getElementById('map-info-modal').classList.remove('show');
     }
 }
 
